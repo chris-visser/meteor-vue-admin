@@ -1,0 +1,32 @@
+{
+  "name": "meteor-vue-boilerplate",
+  "version": "0.0.1",
+  "description": "A boilerplate for Meteor + Vue",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd src && npm start",
+    "install": "cd src && meteor npm install",
+    "build": "cd src && meteor build --directory ../ && cd ../bundle/programs/server && npm install",
+    "lint": "cd src && npm run lint",
+    "pretest": "cd src && npm run pretest",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chris-visser/meteor-vue-boilerplate.git"
+  },
+  "keywords": [
+    "meteor",
+    "vue",
+    "boilerplate"
+  ],
+  "author": "Chris Visser - Cloudspider",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chris-visser/meteor-vue-boilerplate/issues"
+  },
+  "homepage": "https://github.com/chris-visser/meteor-vue-boilerplate#readme",
+  "devDependencies": {
+
+  }
+}

@@ -1,0 +1,20 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor@1.9.2                  # Shared foundation for all Meteor packages
+static-html             # Define static page content in .html files
+standard-minifier-css@1.5.2   # CSS minifier run for production mode
+standard-minifier-js@2.4.0    # JS minifier run for production mode
+es5-shim@4.8.0                # ECMAScript 5 compatibility for older browsers
+ecmascript@0.12.3              # Enable ECMAScript2015+ syntax in app code
+shell-server@0.4.0            # Server-side component of the `meteor shell` command
+webapp@1.7.1                  # Serves a Meteor app over HTTP
+server-render@0.3.1           # Support for server-side rendering
+tracker
+akryum:vue-stylus
+akryum:vue-component
+accounts-base
+accounts-password

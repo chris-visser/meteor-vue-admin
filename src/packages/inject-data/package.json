@@ -1,0 +1,34 @@
+{
+	"name": "inject-data",
+	"version": "2.2.0",
+	"description":
+		"A way to inject data to the client with initial HTML. A continuation of `meteorhacks:inject-data`.",
+	"main": "package.js",
+	"directories": {
+		"lib": "lib",
+		"test": "tests"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"eslint": "^4.18.2",
+		"eslint-config-standard": "^11.0.0",
+		"eslint-plugin-import": "^2.9.0",
+		"eslint-plugin-meteor": "^4.2.0",
+		"eslint-plugin-node": "^6.0.1",
+		"eslint-plugin-promise": "^3.7.0",
+		"eslint-plugin-standard": "^3.0.1"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/abecks/inject-data.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/abecks/inject-data/issues"
+	},
+	"homepage": "https://github.com/abecks/inject-data#readme"
+}
