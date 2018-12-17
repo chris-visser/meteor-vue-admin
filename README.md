@@ -30,8 +30,6 @@ npm start
 - Document components
 - Make user related components more SOLID by extracting the forms from their containers
 - Consider bundling the user store module, meteor-users store plugin and gateway mixin.
-- Optimize loading behavior after login. (AdminLayout must wait with showing up until the user is fully loaded)
-
 
 ## App Directory Structure
 
