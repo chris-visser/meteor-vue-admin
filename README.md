@@ -10,6 +10,7 @@ are covered:
 - Login
 - Forgot Password flow
 - Automatic redirects to the login on authenticated routes
+- Eslint configured for Meteor + Vue
 
 ## Getting Started
 
