@@ -1,8 +1,8 @@
 import { _ } from 'meteor/underscore'
 import { Meteor } from 'meteor/meteor'
-import { InjectData } from './namespace'
 import { WebApp, WebAppInternals } from 'meteor/webapp'
 import { Random } from 'meteor/random'
+import { InjectData } from './namespace'
 
 const Env = new Meteor.EnvironmentVariable()
 
@@ -62,7 +62,6 @@ InjectData.pushData = function pushData(req, key, value) {
 InjectData.getData = function getData(req, key) {
 	if (req.headers._injectPayload) {
 		return _.clone(req.headers._injectPayload[key])
-	} else {
-		return null
 	}
+	return null
 }

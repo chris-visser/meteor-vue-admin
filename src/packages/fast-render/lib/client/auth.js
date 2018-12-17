@@ -9,7 +9,7 @@ Meteor.startup(function() {
 })
 
 // override Meteor._localStorage methods and resetToken accordingly
-var originalSetItem = Meteor._localStorage.setItem
+const originalSetItem = Meteor._localStorage.setItem
 Meteor._localStorage.setItem = function(key, value) {
 	if (key === 'Meteor.loginToken') {
 		Meteor.defer(resetToken)
@@ -17,7 +17,7 @@ Meteor._localStorage.setItem = function(key, value) {
 	originalSetItem.call(Meteor._localStorage, key, value)
 }
 
-var originalRemoveItem = Meteor._localStorage.removeItem
+const originalRemoveItem = Meteor._localStorage.removeItem
 Meteor._localStorage.removeItem = function(key) {
 	if (key === 'Meteor.loginToken') {
 		Meteor.defer(resetToken)
@@ -26,8 +26,8 @@ Meteor._localStorage.removeItem = function(key) {
 }
 
 function resetToken() {
-	var loginToken = Meteor._localStorage.getItem('Meteor.loginToken')
-	var loginTokenExpires = new Date(
+	const loginToken = Meteor._localStorage.getItem('Meteor.loginToken')
+	const loginTokenExpires = new Date(
 		Meteor._localStorage.getItem('Meteor.loginTokenExpires')
 	)
 
@@ -41,6 +41,6 @@ function resetToken() {
 function setToken(loginToken, expires) {
 	Cookie.set('meteor_login_token', loginToken, {
 		path: '/',
-		expires: expires,
+		expires,
 	})
 }

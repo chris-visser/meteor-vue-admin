@@ -8,8 +8,8 @@ import { EJSON } from 'meteor/ejson'
 const bufferedWritesInterval = 5
 
 Tinytest.addAsync('DDPUpdate - convert added to changed', function(test, done) {
-	var collName = Random.id()
-	var coll = new Mongo.Collection(collName)
+	const collName = Random.id()
+	const coll = new Mongo.Collection(collName)
 
 	Meteor.connection._livedata_data({
 		msg: 'added',
@@ -39,7 +39,7 @@ Tinytest.addAsync('DDPUpdate - create collection later on', function(
 	test,
 	done
 ) {
-	var collName = Random.id()
+	const collName = Random.id()
 
 	Meteor.connection._livedata_data({
 		msg: 'added',
@@ -55,7 +55,7 @@ Tinytest.addAsync('DDPUpdate - create collection later on', function(
 		fields: { name: 'kamal' },
 	})
 
-	var coll = new Mongo.Collection(collName)
+	const coll = new Mongo.Collection(collName)
 	Meteor.setTimeout(function() {
 		test.equal(coll.find().fetch().length, 2)
 		done()
@@ -64,8 +64,8 @@ Tinytest.addAsync('DDPUpdate - create collection later on', function(
 
 Tinytest.add('DDPUpdate - delete subscriptions', function(test) {
 	FastRender._revertedBackToOriginal = false
-	var sub1 = { name: 'coola', paramsKey: 'k1' }
-	var sub2 = { name: 'booma', paramsKey: 'k2' }
+	const sub1 = { name: 'coola', paramsKey: 'k1' }
+	const sub2 = { name: 'booma', paramsKey: 'k2' }
 	FastRender._subscriptionIdMap = { subId: sub1, subId2: sub2 }
 	FastRender._subscriptions = { coola: { k1: true }, booma: { k2: true } }
 
@@ -114,22 +114,22 @@ Tinytest.add('DDPUpdate - revertedBackToOriginal', function(test) {
 
 Tinytest.add('DDPUpdate - fake ready messages', function(test) {
 	FastRender._revertedBackToOriginal = false
-	var orginalSend = Meteor.connection._send
+	const orginalSend = Meteor.connection._send
 
-	var params = [10, 20]
-	var paramsKey = EJSON.stringify(params)
+	const params = [10, 20]
+	const paramsKey = EJSON.stringify(params)
 	FastRender._subscriptions = { coolio: {} }
-	FastRender._subscriptions['coolio'][paramsKey] = true
+	FastRender._subscriptions.coolio[paramsKey] = true
 
-	var subId = 'the-id'
+	const subId = 'the-id'
 	Meteor.connection._send({
 		msg: 'sub',
 		name: 'coolio',
 		id: subId,
-		params: params,
+		params,
 	})
 	test.equal(FastRender._subscriptionIdMap, {
-		'the-id': { name: 'coolio', paramsKey: paramsKey },
+		'the-id': { name: 'coolio', paramsKey },
 	})
 
 	Meteor.connection._send = orginalSend

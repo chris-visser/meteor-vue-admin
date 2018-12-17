@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  import UserRegistrationForm from '../components/UserRegistrationForm';
+import UserRegistrationForm from '../components/UserRegistrationForm';
 
-  export default {
-    components: {
-      UserRegistrationForm,
-    },
-  };
+export default {
+  components: {
+    UserRegistrationForm,
+  },
+};
 </script>

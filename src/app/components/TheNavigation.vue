@@ -1,37 +1,37 @@
 <template>
-  <v-navigation-drawer
-      :clipped="$vuetify.breakpoint.lgAndUp"
-      :value="isVisible"
-      class="secondary"
-      dark
-      fixed
-      app
+  <VNavigationDrawer
+    :clipped="$vuetify.breakpoint.lgAndUp"
+    :value="isVisible"
+    class="secondary"
+    dark
+    fixed
+    app
   >
-    <v-list dense>
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>Home</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>contact_mail</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>Contact</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-  </v-navigation-drawer>
+    <VList dense>
+      <VListTile>
+        <VListTileAction>
+          <VIcon>home</VIcon>
+        </VListTileAction>
+        <VListTileContent>
+          <VListTileTitle>Home</VListTileTitle>
+        </VListTileContent>
+      </VListTile>
+      <VListTile>
+        <VListTileAction>
+          <VIcon>contact_mail</VIcon>
+        </VListTileAction>
+        <VListTileContent>
+          <VListTileTitle>Contact</VListTileTitle>
+        </VListTileContent>
+      </VListTile>
+    </VList>
+  </VNavigationDrawer>
 </template>
 
 <script>
-  export default {
-    props: {
-      isVisible: Boolean,
-    },
-  };
+export default {
+  props: {
+    isVisible: Boolean,
+  },
+};
 </script>

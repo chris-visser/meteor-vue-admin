@@ -1,8 +1,8 @@
 /* global __fast_render_config */
 import { Meteor } from 'meteor/meteor'
 import { _ } from 'meteor/underscore'
-import { IDTools } from './id_tools'
 import { Accounts } from 'meteor/accounts-base'
+import { IDTools } from './id_tools'
 
 export const FastRender = {}
 FastRender._dataReceived = false
@@ -32,12 +32,12 @@ FastRender.wait = function() {
 //  Then it'll block the accpeting DDP messages from server
 //  This is the cure
 FastRender.injectDdpMessage = function(conn, message) {
-	FastRender['debugger'].log('injecting ddp message:', message)
+	FastRender.debugger.log('injecting ddp message:', message)
 
 	// Removed check for conn._bufferedWrites due to https://github.com/kadirahq/fast-render/pull/167/files#r74189260
 	// and https://github.com/kadirahq/fast-render/issues/176
 
-	var originalWait = conn._waitingForQuiescence
+	const originalWait = conn._waitingForQuiescence
 	conn._waitingForQuiescence = function() {
 		return false
 	}
@@ -57,7 +57,7 @@ FastRender.init = function(payload) {
 
 	// merging data from different subscriptions
 	//  yes, this is a minimal mergeBox on the client
-	var allData = {}
+	const allData = {}
 	if (payload) {
 		_.each(payload.collectionData, function(subData, collName) {
 			if (!allData[collName]) {
@@ -77,17 +77,17 @@ FastRender.init = function(payload) {
 		})
 	}
 
-	var connection = Meteor.connection
+	const connection = Meteor.connection
 
 	_.each(allData, function(collData, collName) {
 		_.each(collData, function(item, id) {
 			id = IDTools.idStringify(item._id)
 			delete item._id
 
-			var ddpMessage = {
+			const ddpMessage = {
 				msg: 'added',
 				collection: collName,
-				id: id,
+				id,
 				fields: item,
 				frGen: true,
 			}
@@ -115,7 +115,7 @@ FastRender.init = function(payload) {
 
 FastRender._securityCheck = function(payload) {
 	if (payload && payload.loginToken) {
-		var localStorageLoginToken = Meteor._localStorage.getItem(
+		const localStorageLoginToken = Meteor._localStorage.getItem(
 			'Meteor.loginToken'
 		)
 		if (localStorageLoginToken !== payload.loginToken) {
@@ -133,7 +133,7 @@ FastRender._AddedToChanged = function(localCopy, added) {
 
 	_.each(localCopy, function(value, key) {
 		if (key !== '_id') {
-			if (typeof added.fields[key] == 'undefined') {
+			if (typeof added.fields[key] === 'undefined') {
 				added.cleared.push(key)
 			}
 		}
@@ -141,7 +141,7 @@ FastRender._AddedToChanged = function(localCopy, added) {
 }
 
 FastRender._ApplyDDP = function(existing, message) {
-	var newDoc = !existing ? {} : _.clone(existing)
+	let newDoc = !existing ? {} : _.clone(existing)
 	if (message.msg === 'added') {
 		_.each(message.fields, function(value, key) {
 			newDoc[key] = value
@@ -163,12 +163,12 @@ FastRender._ApplyDDP = function(existing, message) {
 // source: https://gist.github.com/kurtmilam/1868955
 //  modified a bit to not to expose this as an _ api
 FastRender._DeepExtend = function deepExtend(obj) {
-	var parentRE = /#{\s*?_\s*?}/
-	var slice = Array.prototype.slice
-	var hasOwnProperty = Object.prototype.hasOwnProperty
+	const parentRE = /#{\s*?_\s*?}/
+	const slice = Array.prototype.slice
+	const hasOwnProperty = Object.prototype.hasOwnProperty
 
 	_.each(slice.call(arguments, 1), function(source) {
-		for (var prop in source) {
+		for (const prop in source) {
 			if (hasOwnProperty.call(source, prop)) {
 				if (
 					_.isNull(obj[prop]) ||
@@ -184,9 +184,9 @@ FastRender._DeepExtend = function deepExtend(obj) {
 					}
 				} else if (_.isArray(obj[prop]) || _.isArray(source[prop])) {
 					if (!_.isArray(obj[prop]) || !_.isArray(source[prop])) {
-						throw 'Error: Trying to combine an array with a non-array (' +
-							prop +
-							')'
+						throw `Error: Trying to combine an array with a non-array (${
+							prop
+						})`
 					} else {
 						obj[prop] = _.reject(
 							FastRender._DeepExtend(obj[prop], source[prop]),
@@ -197,9 +197,9 @@ FastRender._DeepExtend = function deepExtend(obj) {
 					}
 				} else if (_.isObject(obj[prop]) || _.isObject(source[prop])) {
 					if (!_.isObject(obj[prop]) || !_.isObject(source[prop])) {
-						throw 'Error: Trying to combine an object with a non-object (' +
-							prop +
-							')'
+						throw `Error: Trying to combine an object with a non-object (${
+							prop
+						})`
 					} else {
 						obj[prop] = FastRender._DeepExtend(obj[prop], source[prop])
 					}

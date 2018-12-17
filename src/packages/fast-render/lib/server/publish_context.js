@@ -11,33 +11,33 @@ const PublishContext = function PublishContext(
 	params,
 	name
 ) {
-	var self = this
+	const self = this
 
 	// mock session
-	var sessionId = Random.id()
-	var session = {
+	const sessionId = Random.id()
+	const session = {
 		id: sessionId,
 		userId: context.userId,
 		// not null
 		inQueue: {},
 		connectionHandle: {
 			id: sessionId,
-			close: function() {},
-			onClose: function() {},
+			close() {},
+			onClose() {},
 			clientAddress: '127.0.0.1',
 			httpHeaders: context.headers,
 		},
-		added: function(subscriptionHandle, collectionName, strId, fields) {
+		added(subscriptionHandle, collectionName, strId, fields) {
 			// Don't share state with the data passed in by the user.
-			var doc = EJSON.clone(fields)
+			const doc = EJSON.clone(fields)
 			doc._id = self._idFilter.idParse(strId)
 			Meteor._ensure(self._collectionData, collectionName)[strId] = doc
 		},
-		changed: function(subscriptionHandle, collectionName, strId, fields) {
-			var doc = self._collectionData[collectionName][strId]
+		changed(subscriptionHandle, collectionName, strId, fields) {
+			const doc = self._collectionData[collectionName][strId]
 			if (!doc) {
 				throw new Error(
-					'Could not find element with id ' + strId + ' to change'
+					`Could not find element with id ${strId} to change`
 				)
 			}
 			_.each(fields, function(value, key) {
@@ -52,18 +52,18 @@ const PublishContext = function PublishContext(
 				}
 			})
 		},
-		removed: function(subscriptionHandle, collectionName, strId) {
+		removed(subscriptionHandle, collectionName, strId) {
 			if (
 				!(
 					self._collectionData[collectionName] &&
 					self._collectionData[collectionName][strId]
 				)
 			) {
-				throw new Error('Removed nonexistent document ' + strId)
+				throw new Error(`Removed nonexistent document ${strId}`)
 			}
 			delete self._collectionData[collectionName][strId]
 		},
-		sendReady: function(subscriptionIds) {
+		sendReady(subscriptionIds) {
 			// this is called only for non-universal subscriptions
 			if (!self._subscriptionId) throw new Error('Assertion.')
 

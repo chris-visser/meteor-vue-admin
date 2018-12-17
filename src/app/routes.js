@@ -2,7 +2,7 @@ export default [
   {
     path: '/',
     name: 'dashboard',
-    component: () => import('./pages/Dashboard.vue')
+    component: () => import('./pages/Dashboard.vue'),
   },
   {
     path: '/login',
@@ -37,6 +37,6 @@ export default [
   {
     path: '*',
     name: 'not-found',
-    component: () => import('./pages/NotFound.vue')
+    component: () => import('./pages/NotFound.vue'),
   },
 ];

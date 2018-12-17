@@ -7,12 +7,12 @@ import { _ } from 'meteor/underscore'
 import { HTTP } from 'meteor/http'
 
 Tinytest.add('integration - with a simple route', function(test) {
-	var collName = Random.id()
-	var pubName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const pubName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
-	var coll = new Meteor.Collection(collName)
+	const coll = new Meteor.Collection(collName)
 	coll.insert(obj)
 
 	Meteor.publish(pubName, function() {
@@ -23,21 +23,21 @@ Tinytest.add('integration - with a simple route', function(test) {
 		this.subscribe(pubName)
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.isTrue(data.subscriptions[pubName])
 	test.equal(data.collectionData[collName][0][0], obj)
 })
 
 Tinytest.add('integration - onAllRoutes', function(test) {
-	var collName = Random.id()
-	var pubName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const pubName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
-	var coll = new Meteor.Collection(collName)
+	const coll = new Meteor.Collection(collName)
 	coll.insert(obj)
 
-	var cursorHandler = createCursorHandler(function() {
+	const cursorHandler = createCursorHandler(function() {
 		return coll.find()
 	})
 
@@ -49,24 +49,24 @@ Tinytest.add('integration - onAllRoutes', function(test) {
 		this.subscribe(pubName)
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.isTrue(data.subscriptions[pubName])
 	test.equal(data.collectionData[collName][0][0], obj)
 	cursorHandler.stop()
 })
 
 Tinytest.add('integration - onAllRoutes + route ', function(test) {
-	var collName = Random.id()
-	var pubName = Random.id()
-	var path = '/' + Random.id()
-	var obj1 = { _id: 'one', aa: 10 }
-	var obj2 = { _id: 'two', aa: 10 }
+	const collName = Random.id()
+	const pubName = Random.id()
+	const path = `/${Random.id()}`
+	const obj1 = { _id: 'one', aa: 10 }
+	const obj2 = { _id: 'two', aa: 10 }
 
-	var coll = new Meteor.Collection(collName)
+	const coll = new Meteor.Collection(collName)
 	coll.insert(obj1)
 	coll.insert(obj2)
 
-	var cursorHandler = createCursorHandler(function(id) {
+	const cursorHandler = createCursorHandler(function(id) {
 		return coll.find({ _id: id })
 	})
 
@@ -82,7 +82,7 @@ Tinytest.add('integration - onAllRoutes + route ', function(test) {
 		this.subscribe(pubName, 'two')
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.isTrue(data.subscriptions[pubName])
 	test.equal(data.collectionData[collName][0][0], obj1)
 	test.equal(data.collectionData[collName][1][0], obj2)
@@ -90,33 +90,33 @@ Tinytest.add('integration - onAllRoutes + route ', function(test) {
 })
 
 Tinytest.add('integration - null publications', function(test) {
-	var collName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
-	var coll = new Meteor.Collection(collName)
+	const coll = new Meteor.Collection(collName)
 	coll.insert(obj)
 
-	var cursorHandler = createCursorHandler(function() {
+	const cursorHandler = createCursorHandler(function() {
 		return coll.find()
 	})
 	Meteor.publish(null, function() {
 		return cursorHandler.get()
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.equal(data.collectionData[collName][0][0], obj)
 	cursorHandler.stop()
 })
 
 Tinytest.add('integration - send data via this.* apis', function(test) {
-	var collName = Random.id()
-	var pubName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const pubName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
 	Meteor.publish(pubName, function() {
-		var sub = this
+		const sub = this
 		sub.added(collName, obj._id, _.omit(obj, '_id'))
 		Meteor.setTimeout(function() {
 			sub.ready()
@@ -127,7 +127,7 @@ Tinytest.add('integration - send data via this.* apis', function(test) {
 		this.subscribe(pubName)
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.isTrue(data.subscriptions[pubName])
 	test.equal(data.collectionData[collName][0][0], obj)
 })
@@ -135,13 +135,13 @@ Tinytest.add('integration - send data via this.* apis', function(test) {
 Tinytest.add('integration - send data via this.* apis, but delayed', function(
 	test
 ) {
-	var collName = Random.id()
-	var pubName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const pubName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
 	Meteor.publish(pubName, function() {
-		var sub = this
+		const sub = this
 		Meteor.setTimeout(function() {
 			sub.added(collName, obj._id, _.omit(obj, '_id'))
 			sub.ready()
@@ -152,18 +152,18 @@ Tinytest.add('integration - send data via this.* apis, but delayed', function(
 		this.subscribe(pubName)
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.isFalse(data.subscriptions[pubName])
 	test.equal(data.collectionData, {})
 })
 
 Tinytest.add('integration - error inside a publication', function(test) {
-	var collName = Random.id()
-	var pubName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const pubName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
-	var coll = new Meteor.Collection(collName)
+	const coll = new Meteor.Collection(collName)
 	coll.insert(obj)
 
 	Meteor.publish(pubName, function() {
@@ -174,56 +174,55 @@ Tinytest.add('integration - error inside a publication', function(test) {
 		this.subscribe(pubName)
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.equal(data.collectionData, {})
 })
 
 Tinytest.add('integration - error inside a null publication', function(test) {
-	var collName = Random.id()
-	var path = '/' + Random.id()
-	var obj = { _id: 'one', aa: 10 }
+	const collName = Random.id()
+	const path = `/${Random.id()}`
+	const obj = { _id: 'one', aa: 10 }
 
-	var coll = new Meteor.Collection(collName)
+	const coll = new Meteor.Collection(collName)
 	coll.insert(obj)
 
 	Meteor.publish(null, function() {
 		throw new Error('some bad thing happens')
 	})
 
-	var data = getFRData(path)
+	const data = getFRData(path)
 	test.equal(data.collectionData, {})
 })
 
 Tinytest.add('integration - when path has no leading slash', function(test) {
-	var path = Random.id()
+	const path = Random.id()
 
 	test.throws(function() {
 		FastRender.route(path, function() {})
-	}, 'Error: path (' + path + ') must begin with a leading slash "/"')
+	}, `Error: path (${path}) must begin with a leading slash "/"`)
 })
 
-var urlResolve = Npm.require('url').resolve
+const urlResolve = Npm.require('url').resolve
 function getFRData(path) {
-	var url = urlResolve(process.env.ROOT_URL, path)
-	var options = {
+	const url = urlResolve(process.env.ROOT_URL, path)
+	const options = {
 		headers: {
 			Accept: 'text/html',
 		},
 	}
-	var res = HTTP.get(url, options)
+	const res = HTTP.get(url, options)
 
-	var encodedData = res.content.match(/data">(.*)<\/script/)[1]
+	const encodedData = res.content.match(/data">(.*)<\/script/)[1]
 	return InjectData._decode(encodedData)['fast-render-data']
 }
 
 function createCursorHandler(callback) {
-	var stop = false
+	let stop = false
 	function getFn() {
 		if (stop) {
 			return []
-		} else {
-			return callback.apply(this, arguments)
 		}
+		return callback.apply(this, arguments)
 	}
 
 	function stopFn() {

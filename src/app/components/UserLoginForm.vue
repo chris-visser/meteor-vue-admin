@@ -1,95 +1,115 @@
 <template>
-  <v-card>
-
-    <v-card-title primary-title>
+  <VCard>
+    <VCardTitle primary-title>
       <div>
-        <h2 class="headline mb-0">Cloudspider Admin</h2>
+        <h2 class="headline mb-0">
+          Cloudspider Admin
+        </h2>
         <p>Welcome! Please login first</p>
       </div>
-    </v-card-title>
+    </VCardTitle>
 
-    <v-card-text>
-      <v-form @submit.prevent="submit" v-model="isValid">
-        <v-text-field
-            autofocus
-            color="dark"
-            type="email"
-            v-model="email"
-            v-validate="'required|email'"
-            label="E-mail address"
-            data-vv-name="email"
-            :error-messages="errors.collect('email')"
-        ></v-text-field>
-        <v-text-field
-            type="password"
-            color="dark"
-            v-model="password"
-            v-validate="'required'"
-            label="Password"
-            data-vv-name="password"
-            :error-messages="errors.collect('password')"
-        ></v-text-field>
+    <VCardText>
+      <VForm
+        v-model="isValid"
+        @submit.prevent="submit"
+      >
+        <VTextField
+          v-model="email"
+          v-validate="'required|email'"
+          autofocus
+          color="dark"
+          type="email"
+          label="E-mail address"
+          data-vv-name="email"
+          :error-messages="errors.collect('email')"
+        />
+        <VTextField
+          v-model="password"
+          v-validate="'required'"
+          type="password"
+          color="dark"
+          label="Password"
+          data-vv-name="password"
+          :error-messages="errors.collect('password')"
+        />
 
-        <v-alert
-            :value="!!error"
-            color="error"
-            icon="warning"
-            outline
+        <VAlert
+          :value="!!error"
+          color="error"
+          icon="warning"
+          outline
         >
-          {{error}}
-        </v-alert>
+          {{ error }}
+        </VAlert>
 
 
-        <v-btn type="submit" :color="status.color" :dark="status.dark" block>
-          {{status.submitTitle}}
-        </v-btn>
+        <VBtn
+          type="submit"
+          :color="status.color"
+          :dark="status.dark"
+          block
+        >
+          {{ status.submitTitle }}
+        </VBtn>
 
         <p class="text-lg-right mt-4">
-          <v-btn flat small to="/forgot-password">Lost your password? Reset it here!</v-btn>
+          <VBtn
+            flat
+            small
+            to="/forgot-password"
+          >
+            Lost your password? Reset it here!
+          </VBtn>
         </p>
         <p class="text-lg-right mt-4">
-          <v-btn flat small to="/registration">Register yourself now!</v-btn>
+          <VBtn
+            flat
+            small
+            to="/registration"
+          >
+            Register yourself now!
+          </VBtn>
         </p>
-
-      </v-form>
-    </v-card-text>
-  </v-card>
+      </VForm>
+    </VCardText>
+  </VCard>
 </template>
 
 <script>
-  export default {
-    props: {
-      title: String,
-      submitTitle: String,
+export default {
+  props: {
+    title: { type: String, default: 'Login' },
+    submitTitle: { type: String, default: 'Login' },
+  },
+  data() {
+    return {
+      isValid: false,
+      email: '',
+      password: '',
+      error: '',
+      status: { submitTitle: 'Login', color: 'secondary', dark: true },
+    };
+  },
+
+  methods: {
+    async submit() {
+      await this.$validator.validateAll();
+
+      const { email, password } = this;
+
+      if (!this.isValid) {
+        return;
+      }
+
+      this.status = { submitTitle: 'Logging you in...', color: 'default' };
+
+      await this.$store.dispatch('login', { email, password })
+        .catch((error) => {
+          this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
+          this.error = error;
+        });
     },
-    data() {
-      return {
-        isValid: false,
-        email: '',
-        password: '',
-        error: '',
-        status: { submitTitle: 'Login', color: 'secondary', dark: true },
-      };
-    },
-
-    methods: {
-      async submit() {
-        await this.$validator.validateAll();
-
-        const { email, password } = this;
-
-        if (!this.isValid) {
-          return;
-        }
-
-        this.status = { submitTitle: 'Logging you in...', color: 'default' };
-
-        await this.$store.dispatch('login', { email, password })
-          .catch((error) => {
-            this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
-            this.error = error;
-          })
-      },
-    },
-  };
+  },
+};
 </script>

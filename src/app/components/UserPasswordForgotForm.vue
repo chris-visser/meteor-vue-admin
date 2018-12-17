@@ -1,79 +1,96 @@
 <template>
-  <v-card>
-
-    <v-card-title primary-title>
+  <VCard>
+    <VCardTitle primary-title>
       <div>
-        <h2 class="headline mb-0">{{title}}</h2>
-        <p>No worries. We got you covered. Just enter your e-mail address and we'll send you an e-mail with a link to
-          reset your password.</p>
+        <h2 class="headline mb-0">
+          {{ title }}
+        </h2>
+        <p>
+          No worries. We got you covered. Just enter your e-mail address and we'll send you an e-mail with a link to
+          reset your password.
+        </p>
       </div>
-    </v-card-title>
+    </VCardTitle>
 
-    <v-card-text>
-      <v-form @submit.prevent="submit" v-model="isValid">
-        <v-text-field
-            autofocus
-            color="dark"
-            type="email"
-            v-model="email"
-            v-validate="'required|email'"
-            label="E-mail address"
-            data-vv-name="email"
-            :error-messages="errors.collect('email')"
-        ></v-text-field>
+    <VCardText>
+      <VForm
+        v-model="isValid"
+        @submit.prevent="submit"
+      >
+        <VTextField
+          v-model="email"
+          v-validate="'required|email'"
+          autofocus
+          color="dark"
+          type="email"
+          label="E-mail address"
+          data-vv-name="email"
+          :error-messages="errors.collect('email')"
+        />
 
-        {{error}}
+        {{ error }}
 
-        <v-btn type="submit" :color="status.color" :dark="status.dark" block>
-          {{status.submitTitle}}
-        </v-btn>
+        <VBtn
+          type="submit"
+          :color="status.color"
+          :dark="status.dark"
+          block
+        >
+          {{ status.submitTitle }}
+        </VBtn>
 
         <p class="text-lg-right mt-4">
-          <v-btn flat small to="/login">Back to login.</v-btn>
+          <VBtn
+            flat
+            small
+            to="/login"
+          >
+            Back to login.
+          </VBtn>
         </p>
-      </v-form>
-    </v-card-text>
-  </v-card>
+      </VForm>
+    </VCardText>
+  </VCard>
 </template>
 
 <script>
-  import { Accounts } from 'meteor/accounts-base';
+import { Accounts } from 'meteor/accounts-base';
 
-  export default {
-    props: {
-      title: String,
-      submitTitle: String,
+export default {
+  props: {
+    title: String,
+    submitTitle: String,
+  },
+  data() {
+    return {
+      isValid: false,
+      email: '',
+      error: '',
+      status: { submitTitle: this.submitTitle, color: 'secondary', dark: true },
+    };
+  },
+
+  methods: {
+    async submit() {
+      await this.$validator.validateAll();
+
+      const { email } = this;
+
+      if (!this.isValid) {
+        return;
+      }
+
+      this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default' };
+
+      await this.$store.dispatch('forgotPassword', { email })
+        .then(() => {
+          this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
+        })
+        .catch((error) => {
+          this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
+          this.error = error;
+        });
     },
-    data() {
-      return {
-        isValid: false,
-        email: '',
-        error: '',
-        status: { submitTitle: this.submitTitle, color: 'secondary', dark: true },
-      };
-    },
-
-    methods: {
-      async submit() {
-        await this.$validator.validateAll();
-
-        const { email } = this;
-
-        if (!this.isValid) {
-          return;
-        }
-
-        this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default' };
-
-        await this.$store.dispatch('forgotPassword', { email })
-          .then(() => {
-            this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
-          })
-          .catch((error) => {
-            this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
-            this.error = error;
-          });
-      },
-    },
-  };
+  },
+};
 </script>

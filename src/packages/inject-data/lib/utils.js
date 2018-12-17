@@ -6,7 +6,7 @@ import { InjectData } from './namespace'
  * @param {object} ejson
  */
 InjectData.encode = InjectData._encode = function(ejson) {
-	var ejsonString = EJSON.stringify(ejson)
+	const ejsonString = EJSON.stringify(ejson)
 	return encodeURIComponent(ejsonString)
 }
 
@@ -15,7 +15,7 @@ InjectData.encode = InjectData._encode = function(ejson) {
  * @param {string} encodedEjson
  */
 InjectData.decode = InjectData._decode = function(encodedEjson) {
-	var decodedEjsonString = decodeURIComponent(encodedEjson)
+	const decodedEjsonString = decodeURIComponent(encodedEjson)
 	if (!decodedEjsonString) return null
 
 	return EJSON.parse(decodedEjsonString)

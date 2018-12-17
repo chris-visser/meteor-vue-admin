@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
 /**
@@ -5,8 +6,7 @@ import { Tracker } from 'meteor/tracker';
  * keeps it in sync with the Vuex user store
  * @param store
  */
-export default store => {
-
+export default (store) => {
   Tracker.autorun(() => {
     const user = Meteor.user();
 
@@ -22,11 +22,11 @@ export default store => {
   Tracker.autorun((c) => {
     const userId = Meteor.userId();
 
-    if(c.firstRun) {
+    if (c.firstRun) {
       return;
     }
 
-    if(!userId) {
+    if (!userId) {
       store.commit('unsetUser');
     }
   });

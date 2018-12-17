@@ -2,7 +2,7 @@ import { RoutePolicy } from 'meteor/routepolicy'
 
 // meteor algorithm to check if this is a meteor serving http request or not
 export const IsAppUrl = function(req) {
-	var url = req.url
+	const url = req.url
 	if (url === '/favicon.ico' || url === '/robots.txt') {
 		return false
 	}
@@ -24,5 +24,5 @@ export const IsAppUrl = function(req) {
 
 	// we only need to support HTML pages only
 	// this is a check to do it
-	return /html/.test(req.headers['accept'])
+	return /html/.test(req.headers.accept)
 }

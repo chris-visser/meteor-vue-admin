@@ -1,15 +1,18 @@
 <template>
-  <component v-if="$route.name" :is="layout">
-    <router-view />
-  </component>
+  <Component
+    :is="layout"
+    v-if="$route.name"
+  >
+    <RouterView />
+  </Component>
 </template>
 
 <script>
-  export default {
-    computed: {
-      layout() {
-        return (this.$route.meta.layout || 'admin') + '-layout';
-      },
+export default {
+  computed: {
+    layout() {
+      return `${this.$route.meta.layout || 'admin'}-layout`;
     },
-  };
+  },
+};
 </script>

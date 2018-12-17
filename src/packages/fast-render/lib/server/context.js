@@ -4,9 +4,9 @@ import Future from 'fibers/future'
 import { Accounts } from 'meteor/accounts-base'
 import { DDP } from 'meteor/ddp'
 import { Random } from 'meteor/random'
-import PublishContext from './publish_context'
 import { _ } from 'meteor/underscore'
 import { EJSON } from 'meteor/ejson'
+import PublishContext from './publish_context'
 import { FastRender } from './namespace'
 
 const Context = function Context(loginToken, otherParams) {
@@ -21,9 +21,9 @@ const Context = function Context(loginToken, otherParams) {
 		// check to make sure, we've the loginToken,
 		// otherwise a random user will fetched from the db
 		if (loginToken) {
-			var hashedToken = loginToken && Accounts._hashLoginToken(loginToken)
-			var query = { 'services.resume.loginTokens.hashedToken': hashedToken }
-			var options = { fields: { _id: 1 } }
+			const hashedToken = loginToken && Accounts._hashLoginToken(loginToken)
+			const query = { 'services.resume.loginTokens.hashedToken': hashedToken }
+			const options = { fields: { _id: 1 } }
 			var user = Meteor.users.findOne(query, options)
 		}
 
@@ -38,12 +38,12 @@ const Context = function Context(loginToken, otherParams) {
 }
 
 Context.prototype.subscribe = function(subName /*, params */) {
-	var publishHandler = Meteor.default_server.publish_handlers[subName]
+	const publishHandler = Meteor.default_server.publish_handlers[subName]
 	if (publishHandler) {
-		var params = Array.prototype.slice.call(arguments, 1)
+		const params = Array.prototype.slice.call(arguments, 1)
 		// non-universal subs have subscription id
-		var subscriptionId = Random.id()
-		var publishContext = new PublishContext(
+		const subscriptionId = Random.id()
+		const publishContext = new PublishContext(
 			this,
 			publishHandler,
 			subscriptionId,
@@ -52,23 +52,22 @@ Context.prototype.subscribe = function(subName /*, params */) {
 		)
 
 		return this.processPublication(publishContext)
-	} else {
-		console.warn('There is no such publish handler named:', subName)
-		return {}
 	}
+	console.warn('There is no such publish handler named:', subName)
+	return {}
 }
 
 Context.prototype.processPublication = function(publishContext) {
-	var self = this
-	var data = {}
-	var ensureCollection = function(collectionName) {
+	const self = this
+	const data = {}
+	const ensureCollection = function(collectionName) {
 		self._ensureCollection(collectionName)
 		if (!data[collectionName]) {
 			data[collectionName] = []
 		}
 	}
 
-	var future = new Future()
+	const future = new Future()
 	// detect when the context is ready to be sent to the client
 	publishContext.onStop(function() {
 		if (!future.isResolved()) {
@@ -92,12 +91,12 @@ Context.prototype.processPublication = function(publishContext) {
 				// maybe your non-universal publish handler is not calling this.ready()?
 				// or maybe it is returning null to signal empty publish?
 				// it should still call this.ready() or return an empty array []
-				var message =
-					'Publish handler for ' +
-					publishContext._name +
-					' sent no ready signal\n' +
-					' This could be because this publication `return null`.\n' +
-					' Use `return this.ready()` instead.'
+				const message =
+					`Publish handler for ${
+						publishContext._name
+					} sent no ready signal\n` +
+					` This could be because this publication \`return null\`.\n` +
+					` Use \`return this.ready()\` instead.`
 				console.warn(message)
 				future.return()
 			}
@@ -128,7 +127,7 @@ Context.prototype.processPublication = function(publishContext) {
 }
 
 Context.prototype.completeSubscriptions = function(name, params) {
-	var subs = this._subscriptions[name]
+	let subs = this._subscriptions[name]
 	if (!subs) {
 		subs = this._subscriptions[name] = {}
 	}

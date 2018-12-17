@@ -7,12 +7,12 @@
 
 <script>
 
-  export default {
-    components: {},
-    meteor: {
-      user() {
-        return Meteor.user();
-      }
-    }
-  };
+export default {
+  components: {},
+  meteor: {
+    user() {
+      return Meteor.user();
+    },
+  },
+};
 </script>

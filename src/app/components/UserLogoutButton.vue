@@ -1,25 +1,30 @@
 <template>
-  <v-btn icon title="Logout" :loading="isLoading" @click.once="logout">
-    <v-icon>logout</v-icon>
-  </v-btn>
+  <VBtn
+    icon
+    title="Logout"
+    :loading="isLoading"
+    @click.once="logout"
+  >
+    <VIcon>logout</VIcon>
+  </VBtn>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        isLoading: false,
-      };
+export default {
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
+
+  methods: {
+    async logout() {
+      this.isLoading = true;
+
+      await this.$store.dispatch('logout');
+
+      this.isLoading = false;
     },
-
-    methods: {
-      async logout() {
-        this.isLoading = true;
-
-        await this.$store.dispatch('logout');
-
-        this.isLoading = false;
-      },
-    },
-  };
+  },
+};
 </script>

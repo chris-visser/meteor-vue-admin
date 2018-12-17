@@ -1,59 +1,61 @@
 <template>
-  <v-app id="inspire">
+  <VApp id="inspire">
+    <TheNavigation :is-visible="drawerIsVisible" />
 
-    <TheNavigation :isVisible="drawerIsVisible" />
-
-    <TheHeader v-on:toggleDrawerVisibility="drawerIsVisible = !drawerIsVisible">
+    <TheHeader @toggleDrawerVisibility="drawerIsVisible = !drawerIsVisible">
       <UserLogoutButton slot="actions" />
     </TheHeader>
 
-    <v-content>
-      <v-container fluid>
-        <v-layout>
-          <v-alert :value="!isEmailVerified" color="error" slot="page-header">
+    <VContent>
+      <VContainer fluid>
+        <VLayout>
+          <VAlert
+            slot="page-header"
+            :value="!isEmailVerified"
+            color="error"
+          >
             Please verify your e-mail address. This is required before you can do stuff in this system.
-          </v-alert>
+          </VAlert>
 
           <slot />
-        </v-layout>
-      </v-container>
-    </v-content>
-
-  </v-app>
+        </VLayout>
+      </VContainer>
+    </VContent>
+  </VApp>
 </template>
 
 <script>
-  import MeteorUsersMixin from '../mixins/gateway';
-  import TheHeader from '../components/TheHeader';
-  import TheNavigation from '../components/TheNavigation';
-  import UserLogoutButton from '../components/UserLogoutButton';
-  import UserLoginForm from '../components/UserLoginForm';
+import MeteorUsersMixin from '../mixins/gateway';
+import TheHeader from '../components/TheHeader';
+import TheNavigation from '../components/TheNavigation';
+import UserLogoutButton from '../components/UserLogoutButton';
+import UserLoginForm from '../components/UserLoginForm';
 
-  export default {
-    mixins: [MeteorUsersMixin({ isPrivate: true })],
+export default {
+  mixins: [MeteorUsersMixin({ isPrivate: true })],
 
-    components: {
-      UserLoginForm,
-      TheNavigation,
-      TheHeader,
-      UserLogoutButton,
+  components: {
+    UserLoginForm,
+    TheNavigation,
+    TheHeader,
+    UserLogoutButton,
+  },
+  data: () => ({
+    drawerIsVisible: true,
+    requiresAuth: true,
+  }),
+  computed: {
+    isEmailVerified() {
+      return this.$store.state.user.isEmailVerified;
     },
-    data: () => ({
-      drawerIsVisible: true,
-      requiresAuth: true,
-    }),
-    computed: {
-      isEmailVerified() {
-        return this.$store.state.user.isEmailVerified;
-      },
-      userDetailsLoaded() {
-        return this.$store.state.user.userDetailsLoaded;
-      },
-      userId() {
-        return this.$store.state.user.userId;
-      },
+    userDetailsLoaded() {
+      return this.$store.state.user.userDetailsLoaded;
     },
-  };
+    userId() {
+      return this.$store.state.user.userId;
+    },
+  },
+};
 </script>
 
 <style>

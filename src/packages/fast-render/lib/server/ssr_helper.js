@@ -24,7 +24,7 @@ Meteor.subscribe = function(name, ...args) {
 }
 
 FastRender._mergeFrData = function(req, queryData) {
-	var existingPayload = InjectData.getData(req, 'fast-render-data')
+	const existingPayload = InjectData.getData(req, 'fast-render-data')
 	if (!existingPayload) {
 		InjectData.pushData(req, 'fast-render-data', queryData)
 	} else {
@@ -32,7 +32,7 @@ FastRender._mergeFrData = function(req, queryData) {
 		// the we need to merge exisitng data with the new one
 		_.extend(existingPayload.subscriptions, queryData.subscriptions)
 		_.each(queryData.collectionData, function(data, pubName) {
-			var existingData = existingPayload.collectionData[pubName]
+			const existingData = existingPayload.collectionData[pubName]
 			if (existingData) {
 				data = existingData.concat(data)
 			}
@@ -45,12 +45,12 @@ FastRender._mergeFrData = function(req, queryData) {
 
 FastRender.onPageLoad = function(callback) {
 	InjectData.injectToHead = false
-	onPageLoad(async sink => {
+	onPageLoad(async (sink) => {
 		const frContext = new FastRender._Context(
 			sink.request.cookies.meteor_login_token,
 			{
 				headers: sink.headers,
-			}/home/cloudspider/Server/open-source/vue-meteor/packages/vue-ssr
+			} / home / cloudspider / Server / open - source / vue - meteor / packages / vue - ssr
 		)
 
 		await FastRender.frContext.withValue(frContext, async function() {

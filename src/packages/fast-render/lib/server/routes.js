@@ -1,17 +1,17 @@
 import Fiber from 'fibers'
-import { FastRender } from './namespace'
 import { Meteor } from 'meteor/meteor'
 import { Picker } from 'meteor/meteorhacks:picker'
 import { InjectData } from 'meteor/staringatlights:inject-data'
-import PublishContext from './publish_context'
-import { IsAppUrl } from './utils'
 import { _ } from 'meteor/underscore'
 import connect from 'connect'
+import PublishContext from './publish_context'
+import { IsAppUrl } from './utils'
+import { FastRender } from './namespace'
 
 FastRender._onAllRoutes = []
 FastRender.frContext = new Meteor.EnvironmentVariable()
 
-var fastRenderRoutes = Picker.filter(function(req, res) {
+const fastRenderRoutes = Picker.filter(function(req, res) {
 	return IsAppUrl(req)
 })
 fastRenderRoutes.middleware(connect.cookieParser())
@@ -23,7 +23,7 @@ fastRenderRoutes.middleware(function(req, res, next) {
 FastRender.route = function route(path, callback) {
 	if (path.indexOf('/') !== 0) {
 		throw new Error(
-			'Error: path (' + path + ') must begin with a leading slash "/"'
+			`Error: path (${path}) must begin with a leading slash "/"`
 		)
 	}
 	fastRenderRoutes.route(path, FastRender.handleRoute.bind(null, callback))
@@ -33,7 +33,7 @@ function setQueryDataCallback(req, next) {
 	return function(queryData) {
 		if (!queryData) return next()
 
-		var existingPayload = InjectData.getData(req, 'fast-render-data')
+		const existingPayload = InjectData.getData(req, 'fast-render-data')
 		if (!existingPayload) {
 			InjectData.pushData(req, 'fast-render-data', queryData)
 		} else {
@@ -41,7 +41,7 @@ function setQueryDataCallback(req, next) {
 			// the we need to merge exisitng data with the new one
 			_.extend(existingPayload.subscriptions, queryData.subscriptions)
 			_.each(queryData.collectionData, function(data, pubName) {
-				var existingData = existingPayload.collectionData[pubName]
+				const existingData = existingPayload.collectionData[pubName]
 				if (existingData) {
 					data = existingData.concat(data)
 				}
@@ -55,12 +55,12 @@ function setQueryDataCallback(req, next) {
 }
 
 FastRender.handleRoute = function(processingCallback, params, req, res, next) {
-	var afterProcessed = setQueryDataCallback(req, next)
+	const afterProcessed = setQueryDataCallback(req, next)
 	FastRender._processRoutes(params, req, processingCallback, afterProcessed)
 }
 
 FastRender.handleOnAllRoutes = function(req, res, next) {
-	var afterProcessed = setQueryDataCallback(req, next)
+	const afterProcessed = setQueryDataCallback(req, next)
 	FastRender._processAllRoutes(req, afterProcessed)
 }
 
@@ -76,11 +76,11 @@ FastRender._processRoutes = function _processRoutes(
 ) {
 	callback = callback || function() {}
 
-	var path = req.url
-	var loginToken = req.cookies['meteor_login_token']
-	var headers = req.headers
+	const path = req.url
+	const loginToken = req.cookies.meteor_login_token
+	const headers = req.headers
 
-	var context = new FastRender._Context(loginToken, { headers: headers })
+	const context = new FastRender._Context(loginToken, { headers })
 
 	try {
 		FastRender.frContext.withValue(context, function() {
@@ -100,12 +100,12 @@ FastRender._processRoutes = function _processRoutes(
 FastRender._processAllRoutes = function _processAllRoutes(req, callback) {
 	callback = callback || function() {}
 
-	var path = req.url
-	var loginToken = req.cookies['meteor_login_token']
-	var headers = req.headers
+	const path = req.url
+	const loginToken = req.cookies.meteor_login_token
+	const headers = req.headers
 
 	new Fiber(function() {
-		var context = new FastRender._Context(loginToken, { headers: headers })
+		const context = new FastRender._Context(loginToken, { headers })
 
 		try {
 			FastRender._onAllRoutes.forEach(function(callback) {
@@ -120,21 +120,21 @@ FastRender._processAllRoutes = function _processAllRoutes(req, callback) {
 }
 
 function handleError(err, path, callback) {
-	var message =
-		'error on fast-rendering path: ' + path + ' ; error: ' + err.stack
+	const message =
+		`error on fast-rendering path: ${path} ; error: ${err.stack}`
 	console.error(message)
 	callback(null)
 }
 
 // adding support for null publications
 FastRender.onAllRoutes(function() {
-	var context = this
-	var nullHandlers = Meteor.default_server.universal_publish_handlers
+	const context = this
+	const nullHandlers = Meteor.default_server.universal_publish_handlers
 
 	if (nullHandlers) {
 		nullHandlers.forEach(function(publishHandler) {
 			// universal subs have subscription ID, params, and name undefined
-			var publishContext = new PublishContext(context, publishHandler)
+			const publishContext = new PublishContext(context, publishHandler)
 			context.processPublication(publishContext)
 		})
 	}

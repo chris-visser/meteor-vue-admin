@@ -1,26 +1,36 @@
 <template>
-  <v-app id="inspire">
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
+  <VApp id="inspire">
+    <VContent>
+      <VContainer
+        fluid
+        fill-height
+      >
+        <VLayout
+          align-center
+          justify-center
+        >
+          <VFlex
+            xs12
+            sm8
+            md4
+          >
             <slot />
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </v-app>
+          </VFlex>
+        </VLayout>
+      </VContainer>
+    </VContent>
+  </VApp>
 </template>
 
 <script>
-  import MeteorUsersMixin from '../mixins/gateway';
+import MeteorUsersMixin from '../mixins/gateway';
 
-  export default {
-    mixins: [MeteorUsersMixin({ isGateway: true })],
+export default {
+  mixins: [MeteorUsersMixin({ isGateway: true })],
 
-    components: {},
+  components: {},
 
-  };
+};
 </script>
 
 <style>
@@ -37,4 +47,3 @@
     transition: background-color 5000s ease-in-out 0s;
   }
 </style>
-

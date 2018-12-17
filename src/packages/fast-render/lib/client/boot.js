@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
-import { FastRender } from './fast_render'
 import { InjectData } from 'meteor/staringatlights:inject-data'
+import { FastRender } from './fast_render'
 
 Meteor.startup(function() {
 	if (!FastRender._wait) {

@@ -4,7 +4,7 @@ import { onPageLoad } from 'meteor/server-render'
 
 FastRender.onPageLoad = function(callback) {
 	FastRender.wait()
-	onPageLoad(sink => {
+	onPageLoad((sink) => {
 		InjectData.getData('fast-render-data', async function(data) {
 			FastRender.init(data)
 			callback(sink)

@@ -1,13 +1,16 @@
 <template>
-  <UserPasswordResetForm title="Reset Password" submitTitle="Reset" />
+  <UserPasswordResetForm
+    title="Reset Password"
+    submit-title="Reset"
+  />
 </template>
 
 <script>
-  import UserPasswordResetForm from '../components/UserPasswordResetForm';
+import UserPasswordResetForm from '../components/UserPasswordResetForm';
 
-  export default {
-    components: {
-      UserPasswordResetForm,
-    },
-  };
+export default {
+  components: {
+    UserPasswordResetForm,
+  },
+};
 </script>

@@ -1,28 +1,27 @@
 <template>
-  <v-toolbar
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="primary"
-      app
-      fixed
+  <VToolbar
+    :clipped-left="$vuetify.breakpoint.lgAndUp"
+    color="primary"
+    app
+    fixed
   >
-    <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
-    <v-toolbar-title>Cloudspider - Admin</v-toolbar-title>
+    <VToolbarSideIcon @click.stop="toggleDrawer" />
+    <VToolbarTitle>Cloudspider - Admin</VToolbarTitle>
 
     <slot name="main" />
 
-    <v-spacer></v-spacer>
+    <VSpacer />
 
     <slot name="actions" />
-
-  </v-toolbar>
+  </VToolbar>
 </template>
 
 <script>
-  export default {
-    methods: {
-      toggleDrawer() {
-        this.$emit('toggleDrawerVisibility');
-      }
+export default {
+  methods: {
+    toggleDrawer() {
+      this.$emit('toggleDrawerVisibility');
     },
-  };
+  },
+};
 </script>
