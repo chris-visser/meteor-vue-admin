@@ -1,10 +1,9 @@
-import user from './user';
-import MeteorUsers from './plugins/meteor-users';
+import MeteorUsers from './plugins/MeteorUsers';
 
 export default {
   plugins: [MeteorUsers],
 
   modules: {
-    user,
+
   },
 };

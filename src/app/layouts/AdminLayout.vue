@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import MeteorUsersMixin from '../mixins/gateway';
+import MeteorUsersMixin from '../mixins/MeteorUsers';
 import TheHeader from '../components/TheHeader';
 import TheNavigation from '../components/TheNavigation';
 import UserLogoutButton from '../components/UserLogoutButton';

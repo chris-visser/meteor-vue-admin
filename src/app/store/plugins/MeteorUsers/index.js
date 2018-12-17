@@ -1,12 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
+import userStore from './store';
 /**
  * This plugin tracks the user's session with Meteor Tracker and
  * keeps it in sync with the Vuex user store
  * @param store
  */
 export default (store) => {
+
+  store.registerModule('user', userStore);
+
   Tracker.autorun(() => {
     const user = Meteor.user();
 

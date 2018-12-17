@@ -33,6 +33,7 @@ npm start
 - Consider bundling the user store module, meteor-users store plugin and gateway mixin.
 
 ## App Directory Structure
+The structure of the app follows
 
 ### components
 This folder should contain all the Vue components

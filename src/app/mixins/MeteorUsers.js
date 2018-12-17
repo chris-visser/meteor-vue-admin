@@ -11,14 +11,12 @@
  * @param {Boolean} [isPrivate=false] - Specifies that this is a private page.
  * Un-authenticated users will be redirected to the loginPage
  * @param {String} [mainPagePath="/"] - Allows for a custom mainPage.
- * Logged inusers will be redirected to this path
+ * Logged in users will be redirected to this path
  * @param {String} [loginPagePath="/"] - Allows for a custom loginPage.
  * Un-authenticated users will be redirected to this path
  * @returns {{mounted: function, computed: Object, watch: Object, methods: Object}}
  */
-export default ({
-  isGateway = false, isPrivate = false, mainPagePath = '/', loginPagePath = '/login',
-}) => ({
+export default ({ isGateway = false, isPrivate = false, mainPagePath = '/', loginPagePath = '/login' }) => ({
   computed: {
     userDetailsLoaded() {
       return this.$store.state.user.userDetailsLoaded;

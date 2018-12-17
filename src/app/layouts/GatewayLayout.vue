@@ -1,19 +1,9 @@
 <template>
   <VApp id="inspire">
     <VContent>
-      <VContainer
-        fluid
-        fill-height
-      >
-        <VLayout
-          align-center
-          justify-center
-        >
-          <VFlex
-            xs12
-            sm8
-            md4
-          >
+      <VContainer fluid fill-height>
+        <VLayout align-center justify-center>
+          <VFlex xs12 sm8 md4>
             <slot />
           </VFlex>
         </VLayout>
@@ -23,14 +13,14 @@
 </template>
 
 <script>
-import MeteorUsersMixin from '../mixins/gateway';
+  import MeteorUsersMixin from '../mixins/MeteorUsers';
 
-export default {
-  mixins: [MeteorUsersMixin({ isGateway: true })],
+  export default {
+    mixins: [MeteorUsersMixin({ isGateway: true })],
 
-  components: {},
+    components: {},
 
-};
+  };
 </script>
 
 <style>
