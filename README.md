@@ -1,4 +1,4 @@
-The Meteor Vue Material Admin boilerplate is the ideal kickstarter for people that 
+WIP: The Meteor Vue Material Admin boilerplate is the ideal kickstarter for people that 
 require an admin system that can be easily extended. 
 
 It implements Vue's best practices along with the Vuetify design system (Material) 

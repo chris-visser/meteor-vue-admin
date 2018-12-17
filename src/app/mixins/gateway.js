@@ -13,26 +13,26 @@
  */
 export default ({ isGateway = false, isPrivate = false, mainPagePath = '/', loginPagePath = '/login' }) => ({
   computed: {
-    userId() {
-      return this.$store.state.user.userId;
+    userDetailsLoaded() {
+      return this.$store.state.user.userDetailsLoaded;
     },
   },
 
   mounted() {
-    this.trackUserId();
+    this.trackUser();
   },
 
   watch: {
-    userId() {
-      this.trackUserId();
+    userDetailsLoaded() {
+      this.trackUser();
     },
   },
 
   methods: {
-    trackUserId() {
-      if (!this.userId && isPrivate) {
+    trackUser() {
+      if (!this.userDetailsLoaded && isPrivate) {
         this.$router.replace(loginPagePath);
-      } else if (this.userId && isGateway) {
+      } else if (this.userDetailsLoaded && isGateway) {
         this.$router.replace(mainPagePath);
       }
     },
