@@ -80,10 +80,10 @@
     data() {
       return {
         isValid: false,
-        email: 'redroest@gmail.com',
-        password: 'gompie2:',
-        repeatPassword: 'gompie2:',
-        displayName: 'Chris',
+        email: '',
+        password: '',
+        repeatPassword: '',
+        displayName: '',
         error: '',
 
         status: { submitTitle: 'Register', color: 'secondary', dark: true },

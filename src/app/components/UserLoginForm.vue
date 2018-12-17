@@ -65,8 +65,8 @@
     data() {
       return {
         isValid: false,
-        email: 'redroest@gmail.com',
-        password: 'gompie2:',
+        email: '',
+        password: '',
         error: '',
         status: { submitTitle: 'Login', color: 'secondary', dark: true },
       };
