@@ -79,5 +79,17 @@ export default {
         });
       });
     },
+    resetPassword(context, { token, password }) {
+      return new Promise((resolve, reject) => {
+        Accounts.resetPassword(token, password, (error, result) => {
+          if (error) {
+            console.log(error);
+            reject(error.reason);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    },
   },
 };

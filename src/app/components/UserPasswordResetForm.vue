@@ -12,6 +12,7 @@
     <v-card-text>
       <v-form @submit.prevent="submit" v-model="isValid">
         <v-text-field
+            autofocus
             type="password"
             v-model="password"
             color="dark"
@@ -75,20 +76,14 @@
 
         this.status = { submitTitle: 'Saving the new password...', color: 'default' };
 
-        Accounts.resetPassword(token, password, (error) => {
-          this.status = { submitTitle: 'Finished! Logging you in automatically...', color: 'success', dark: true };
-
-          if (error) {
-            console.log(error);
+        await this.$store.dispatch('resetPassword', { token, password })
+          .then(() => {
+            this.status = { submitTitle: 'Finished! Logging you in automatically...', color: 'success', dark: true };
+          })
+          .catch((error) => {
             this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
-            this.error = error.reason;
-            return;
-          }
-
-          setTimeout(() => {
-            this.$router.replace('/');
-          }, 1500);
-        });
+            this.error = error;
+          });
       },
     },
   };
