@@ -7,13 +7,17 @@
       <UserLogoutButton slot="actions" />
     </TheHeader>
 
-    <ThePage>
-      <v-alert :value="!isEmailVerified" color="error" slot="page-header">
-        Please verify your e-mail address. This is required before you can do stuff in this system.
-      </v-alert>
+    <v-content>
+      <v-container fluid>
+        <v-layout>
+          <v-alert :value="!isEmailVerified" color="error" slot="page-header">
+            Please verify your e-mail address. This is required before you can do stuff in this system.
+          </v-alert>
 
-      <slot slot="page-body" />
-    </ThePage>
+          <slot />
+        </v-layout>
+      </v-container>
+    </v-content>
 
   </v-app>
 </template>
@@ -22,7 +26,6 @@
   import MeteorUsersMixin from '../mixins/gateway';
   import TheHeader from '../components/TheHeader';
   import TheNavigation from '../components/TheNavigation';
-  import ThePage from '../components/ThePage';
   import UserLogoutButton from '../components/UserLogoutButton';
   import UserLoginForm from '../components/UserLoginForm';
 
@@ -33,7 +36,6 @@
       UserLoginForm,
       TheNavigation,
       TheHeader,
-      ThePage,
       UserLogoutButton,
     },
     data: () => ({
