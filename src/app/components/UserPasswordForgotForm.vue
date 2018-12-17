@@ -65,16 +65,14 @@
 
         this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default' };
 
-        Accounts.forgotPassword({ email }, (error) => {
-          this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
-
-          if (error) {
+        await this.$store.dispatch('forgotPassword', { email })
+          .then(() => {
+            this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
+          })
+          .catch((error) => {
             this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
-            console.log(error);
-            this.error = error.reason;
-            return;
-          }
-        });
+            this.error = error;
+          });
       },
     },
   };

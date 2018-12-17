@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
 
 export default {
@@ -35,7 +36,7 @@ export default {
         Accounts.createUser({ email, password }, (error, result) => {
           if (error) {
             console.log(error);
-            reject(error);
+            reject(error.reason);
           } else {
             resolve(result);
           }
@@ -58,7 +59,20 @@ export default {
       return new Promise((resolve, reject) => {
         Meteor.logout((error, result) => {
           if (error) {
-            reject(error);
+            console.log(error);
+            reject(error.reason);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    },
+    forgotPassword(context, { email }) {
+      return new Promise((resolve, reject) => {
+        Accounts.forgotPassword({ email }, (error, result) => {
+          if (error) {
+            console.log(error);
+            reject(error.reason);
           } else {
             resolve(result);
           }
