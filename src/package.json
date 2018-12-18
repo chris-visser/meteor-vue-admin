@@ -7,7 +7,8 @@
     "pretest": "npm run lint --silent",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
+    "visualize": "meteor --production --extra-packages bundle-visualizer",
+    "preinstall": "if ! type \"meteor\"; then curl https://install.meteor.com/ | sh; fi"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
