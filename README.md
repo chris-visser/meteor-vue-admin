@@ -14,7 +14,10 @@ are covered:
 
 ## Getting Started
 
-Run the below command to install the dependencies
+Run the below command to install the dependencies. 
+
+>Note that when you don't have a copy of Meteor 
+installed on you development environment, this will install it automatically for you.
 
 ```sh
 npm install
@@ -26,6 +29,19 @@ Then start the app in development mode:
 npm start
 ```
 
+Visit http://localhost:3000 and you are up and running!
+
+### First time visit
+On first time visit you will ofcourse have to register a new account. The first account 
+registered will automatically get 'owner' privileges. 
+
+E-mails are not yet sent at this point. A nice Meteor feature is that when that's the case, 
+the mail contents end up in your console. This allows you to click on the verification link 
+from the console.
+
+To make use of the e-mail system, 
+[set the MAIL_URL environment variable according to the Meteor docs.](https://docs.meteor.com/api/email.html)
+
 ## TODOs
 
 - Document components
@@ -34,6 +50,9 @@ npm start
 
 ## App Directory Structure
 The structure of the app follows
+
+### api
+This is the folder that contains things like Meteor methods, collections, publications and hooks. 
 
 ### components
 This folder should contain all the Vue components
