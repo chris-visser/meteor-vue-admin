@@ -1,2 +1,2 @@
-
+import './publications';
 import './hooks';
