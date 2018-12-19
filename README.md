@@ -50,6 +50,7 @@ To make use of the e-mail system,
 - Make user related components more SOLID by extracting the forms from their containers
 - Implement user edit functionality
 - Simplify more
+- Start testing, its not a POC anymore :)
 
 ## App Directory Structure
 The structure of the app follows
