@@ -109,6 +109,7 @@ export default {
           this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
           this.error = error;
         });
+
     },
   },
 };

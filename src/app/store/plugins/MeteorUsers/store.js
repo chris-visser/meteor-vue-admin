@@ -92,5 +92,17 @@ export default {
         });
       });
     },
+    removeUser(context, { _id }) {
+      return new Promise((resolve, reject) => {
+        Meteor.call('removeUser', { _id }, (error, result) => {
+          if (error) {
+            console.log(error);
+            reject(error.reason);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    },
   },
 };
