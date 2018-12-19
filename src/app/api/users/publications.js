@@ -6,5 +6,5 @@ Meteor.publish('users', function () {
     return [];
   }
 
-  return Meteor.users({}, { sort: { createdAt: 1 } });
+  return Meteor.users.find({}, { sort: { createdAt: 1 } });
 });

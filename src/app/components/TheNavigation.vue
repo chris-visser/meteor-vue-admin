@@ -8,7 +8,7 @@
     app
   >
     <VList dense>
-      <VListTile>
+      <VListTile to="/">
         <VListTileAction>
           <VIcon>home</VIcon>
         </VListTileAction>
@@ -16,12 +16,12 @@
           <VListTileTitle>Home</VListTileTitle>
         </VListTileContent>
       </VListTile>
-      <VListTile>
+      <VListTile  to="/users">
         <VListTileAction>
-          <VIcon>contact_mail</VIcon>
+          <VIcon>group</VIcon>
         </VListTileAction>
         <VListTileContent>
-          <VListTileTitle>Contact</VListTileTitle>
+          <VListTileTitle>Users</VListTileTitle>
         </VListTileContent>
       </VListTile>
     </VList>

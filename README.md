@@ -6,9 +6,9 @@ and has a fully functional implementation of Meteor's account system. The follow
 are covered:
 
 - Meteor Integration with Vuetify
-- Registration
-- Login
+- Login, Registration, Access Control, Forgot Password and User Management
 - Forgot Password flow
+- Realtime as the default
 - Automatic redirects to the login on authenticated routes
 - Eslint configured for Meteor + Vue
 

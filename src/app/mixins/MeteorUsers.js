@@ -21,6 +21,9 @@ export default ({ isGateway = false, isPrivate = false, mainPagePath = '/', logi
     userDetailsLoaded() {
       return this.$store.state.user.userDetailsLoaded;
     },
+    userId() {
+      return this.$store.state.user.userId;
+    }
   },
 
   mounted() {
@@ -35,9 +38,16 @@ export default ({ isGateway = false, isPrivate = false, mainPagePath = '/', logi
 
   methods: {
     trackUser() {
-      if (!this.userDetailsLoaded && isPrivate) {
+
+      const isLoading = this.userId && !this.userDetailsLoaded;
+      const isLoggedOut = !this.userId && isPrivate;
+      const isLoggedIn = this.userId && this.userDetailsLoaded;
+
+      if(isLoading) {
+
+      } else if (isLoggedOut && isPrivate) {
         this.$router.replace(loginPagePath);
-      } else if (this.userDetailsLoaded && isGateway) {
+      } else if (isLoggedIn && isGateway) {
         this.$router.replace(mainPagePath);
       }
     },

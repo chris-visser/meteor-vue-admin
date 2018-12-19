@@ -1,5 +1,10 @@
 export default [
   {
+    path: '/users',
+    name: 'users',
+    component: () => import('./pages/Users.vue'),
+  },
+  {
     path: '/',
     name: 'dashboard',
     component: () => import('./pages/Dashboard.vue'),

@@ -7,15 +7,18 @@
     </TheHeader>
 
     <VContent>
-      <VContainer fluid>
-        <VLayout>
-          <VAlert
-            slot="page-header"
-            :value="!isEmailVerified"
-            color="error"
-          >
-            Please verify your e-mail address. This is required before you can do stuff in this system.
-          </VAlert>
+      <VContainer fluid align-start>
+        <VLayout row wrap>
+          <v-flex xs12>
+            <VAlert
+                slot="page-header"
+                :value="showEmailUnverified"
+                color="error"
+            >
+              Please verify your e-mail address. This is required before you can do stuff in this system.
+            </VAlert>
+          </v-flex>
+
 
           <slot />
         </VLayout>
@@ -45,8 +48,10 @@ export default {
     requiresAuth: true,
   }),
   computed: {
-    isEmailVerified() {
-      return this.$store.state.user.isEmailVerified;
+    showEmailUnverified() {
+      const isLoading = !this.$store.state.user.userDetailsLoaded;
+
+      return !isLoading && !this.$store.state.user.isEmailVerified;
     },
     userDetailsLoaded() {
       return this.$store.state.user.userDetailsLoaded;
