@@ -16,7 +16,7 @@ Accounts.onCreateUser(({ profile }, user) => {
     ...user,
     profile,
     roles: {
-      __global_roles__: ['admin'],
+      __global_roles__: ['owner'],
     },
   };
 });
