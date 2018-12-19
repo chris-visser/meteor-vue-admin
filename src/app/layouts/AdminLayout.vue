@@ -19,8 +19,9 @@
             </VAlert>
           </v-flex>
 
-
           <slot />
+
+          <MessageToast />
         </VLayout>
       </VContainer>
     </VContent>
@@ -28,39 +29,53 @@
 </template>
 
 <script>
-import MeteorUsersMixin from '../mixins/MeteorUsers';
-import TheHeader from '../components/TheHeader';
-import TheNavigation from '../components/TheNavigation';
-import UserLogoutButton from '../components/UserLogoutButton';
-import UserLoginForm from '../components/UserLoginForm';
+  import MeteorUsersMixin from '../mixins/MeteorUsers';
+  import TheHeader from '../components/TheHeader';
+  import TheNavigation from '../components/TheNavigation';
+  import UserLogoutButton from '../components/UserLogoutButton';
+  import UserLoginForm from '../components/UserLoginForm';
+  import MessageToast from '../components/MessageToast';
 
-export default {
-  mixins: [MeteorUsersMixin({ isPrivate: true })],
+  export default {
+    mixins: [MeteorUsersMixin({ isPrivate: true })],
 
-  components: {
-    UserLoginForm,
-    TheNavigation,
-    TheHeader,
-    UserLogoutButton,
-  },
-  data: () => ({
-    drawerIsVisible: true,
-    requiresAuth: true,
-  }),
-  computed: {
-    showEmailUnverified() {
-      const isLoading = !this.$store.state.user.userDetailsLoaded;
+    components: {
+      MessageToast,
+      UserLoginForm,
+      TheNavigation,
+      TheHeader,
+      UserLogoutButton,
+    },
+    data: () => ({
+      drawerIsVisible: true,
+      requiresAuth: true,
+    }),
+    mounted() {
+      if (this.userDetailsLoaded) {
+        this.$store.dispatch('notify', { text: `Welcome back ${this.$store.state.user.profile.displayName}` });
+      }
+    },
+    computed: {
+      showEmailUnverified() {
+        const isLoading = !this.$store.state.user.userDetailsLoaded;
 
-      return !isLoading && !this.$store.state.user.isEmailVerified;
+        return !isLoading && !this.$store.state.user.isEmailVerified;
+      },
+      userDetailsLoaded() {
+        return this.$store.state.user.userDetailsLoaded;
+      },
+      userId() {
+        return this.$store.state.user.userId;
+      },
     },
-    userDetailsLoaded() {
-      return this.$store.state.user.userDetailsLoaded;
+    watch: {
+      userDetailsLoaded(userDetailsLoaded) {
+        if (userDetailsLoaded) {
+          this.$store.dispatch('notify', { text: `Welcome back ${this.$store.state.user.profile.displayName}` });
+        }
+      },
     },
-    userId() {
-      return this.$store.state.user.userId;
-    },
-  },
-};
+  };
 </script>
 
 <style>
