@@ -6,9 +6,11 @@ and has a fully functional implementation of Meteor's account system. The follow
 are covered:
 
 - Meteor Integration with Vuetify
-- Login, Registration, Access Control, Forgot Password and User Management
+- Login, Registration, Access Control, Forgot Password
+- User Overview + Management
 - Forgot Password flow
 - Realtime as the default
+- A convenient Vuex controlled messaging system to notify users 
 - Automatic redirects to the login on authenticated routes
 - Eslint configured for Meteor + Vue
 
@@ -44,9 +46,10 @@ To make use of the e-mail system,
 
 ## TODOs
 
-- Document components
+- Document features, plugins, components.. Maybe great a guide...
 - Make user related components more SOLID by extracting the forms from their containers
-- Consider bundling the user store module, meteor-users store plugin and gateway mixin.
+- Implement user edit functionality
+- Simplify more
 
 ## App Directory Structure
 The structure of the app follows
