@@ -12,9 +12,9 @@
       <td>{{ props.item.roles | list }}</td>
       <td>{{ props.item.createdAt | date }}</td>
       <td>{{ props.item.lastSeen | date }}</td>
-      <td class="justify-end layout px-0 pr-3">
+      <td class="text-xs-right">
         <!--<v-icon small class="mr-2" @click="editDoc(props.item)">-->
-          <!--edit-->
+        <!--edit-->
         <!--</v-icon>-->
         <v-icon small @click="deleteDoc(props.item)">
           delete
@@ -62,11 +62,18 @@
     methods: {
       async deleteDoc({ _id, displayName, email }) {
         const bool = confirm(`Are you sure that you want to remove ${displayName || email}?`);
-        if(!bool) {
+        if (!bool) {
           return;
         }
 
-        await this.$store.dispatch('removeUser', { _id });
+        Meteor.call('removeUser', { _id }, (error) => {
+          if (error) {
+            this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
+            this.error = error.reason;
+          } else {
+            this.status = { submitTitle: `${displayName || email} was removed!`, color: 'success', dark: true };
+          }
+        });
       },
       editDoc(doc) {
         console.log('Edit action not yet implemented', doc);

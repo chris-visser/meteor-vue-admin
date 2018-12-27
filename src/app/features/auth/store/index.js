@@ -1,3 +1,2 @@
-import user from './user';
-
-export default user;
+export { default as plugin } from './plugin';
+export { default } from './user';

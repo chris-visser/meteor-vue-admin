@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 
 // Meteor Tracker integration
 import VueMeteorTracker from 'vue-meteor-tracker';
-import VueSupply from 'vue-supply';
+// import VueSupply from 'vue-supply';
 import VueObserveVisibility from 'vue-observe-visibility';
 import VeeValidate from 'vee-validate';
 
@@ -26,6 +26,6 @@ Vue.use(VueMeteorTracker); // Connects Meteor's reactivity system to Vue
 Vue.config.meteor.freeze = true;
 
 
-Vue.use(VueSupply);
+// Vue.use(VueSupply);
 
 Vue.use(VueObserveVisibility);

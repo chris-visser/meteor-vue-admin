@@ -1,4 +1,4 @@
-import './app/features/users/client';
-import './app/features/todos/client';
+import './app/features/users';
+import './app/features/todos';
 
 import './app/core';

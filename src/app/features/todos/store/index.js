@@ -1,3 +1,1 @@
-import store from './todos';
-
-export default store;
+export {default} from './todos';
