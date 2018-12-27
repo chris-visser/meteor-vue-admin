@@ -99,13 +99,13 @@ To this:
   import TheNavigation from '../components/TheNavigation';
   import Notifications from '../features/notifications';
 
-  import GatewayModal from '../features/auth/components/GatewayModal';
+  import GatewayModal from '../features/auth/components/GatewayModal'; // New
   import UserLogoutButton from '../features/auth/components/LogoutButton';
 
   export default {
 
     components: {
-      GatewayModal,
+      GatewayModal, // New
       Notifications,
       TheNavigation,
       TheHeader,
