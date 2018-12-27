@@ -18,6 +18,7 @@
 
       <slot v-if="userId" />
 
+      <GatewayModal />
       <Notifications />
     </v-content>
   </v-app>
@@ -28,13 +29,13 @@
   import TheNavigation from '../components/TheNavigation';
   import Notifications from '../features/notifications';
 
-  import AuthRedirectMixin from '../features/auth/mixins/redirect';
+  import GatewayModal from '../features/auth/components/GatewayModal';
   import UserLogoutButton from '../features/auth/components/LogoutButton';
 
   export default {
-    mixins: [AuthRedirectMixin({ isPrivate: true })],
 
     components: {
+      GatewayModal,
       Notifications,
       TheNavigation,
       TheHeader,

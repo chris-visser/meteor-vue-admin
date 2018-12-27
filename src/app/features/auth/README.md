@@ -6,6 +6,23 @@ and reset-password forms each have their own route.
 
 ## Usage
 
+First we need to add the store module and plugin.
+
+```javascript
+import user, { plugin as UserPlugin } from '../features/auth/store';
+
+export default {
+  plugins: [UserPlugin], // Connects Meteor's reactive user state to the store using Tracker
+
+  modules: {
+    user,
+  },
+};
+```
+
+The auth feature supports 2 types of gateway. One is modal based and the other is redirect based.
+
+### Redirect based login
 Add the auth routes to the global routes like below:
 
 ```javascript
@@ -28,18 +45,6 @@ export default [
 
 Connect the auth store and the plugin to the global store. Since the auth store contains user info
 it should be added to the store as 'user'.
-
-```javascript
-import user, { plugin as UserPlugin } from '../features/auth/store';
-
-export default {
-  plugins: [UserPlugin], // Connects Meteor's reactive user state to the store using Tracker
-
-  modules: {
-    user,
-  },
-};
-```
 
 As a final step add the redirect mixin to the layout component(s) where needed. On your 
 admin component use this: 
@@ -64,6 +69,68 @@ export default {
 
 By not adding the mixin or the routes, you can create your own auth flow and use the 
 login component for example in a modal. 
+
+### Modal based login
+Since redirect based login is the default, remove the auth routes from `src/app/routes.js`.
+
+Now change the `AdminLayout` from:
+```javascript
+  import TheHeader from '../components/TheHeader';
+  import TheNavigation from '../components/TheNavigation';
+  import Notifications from '../features/notifications';
+
+  import AuthRedirectMixin from '../features/auth/mixins/redirect';
+  import UserLogoutButton from '../features/auth/components/LogoutButton';
+
+  export default {
+    mixins: [AuthRedirectMixin({ isPrivate: true })],
+
+    components: {
+      Notifications,
+      TheNavigation,
+      TheHeader,
+      UserLogoutButton,
+    },
+    ...
+```
+To this:
+```javascript
+  import TheHeader from '../components/TheHeader';
+  import TheNavigation from '../components/TheNavigation';
+  import Notifications from '../features/notifications';
+
+  import GatewayModal from '../features/auth/components/GatewayModal';
+  import UserLogoutButton from '../features/auth/components/LogoutButton';
+
+  export default {
+
+    components: {
+      GatewayModal,
+      Notifications,
+      TheNavigation,
+      TheHeader,
+      UserLogoutButton,
+    },
+```
+
+Also add the <GatewayModal /> component to the template:
+```javascript
+    <v-content>
+
+      <v-alert
+          slot="page-header"
+          :value="showEmailUnverified"
+          color="error"
+      >
+        Please verify your e-mail address. This is required before you can do stuff in this system.
+      </v-alert>
+
+      <slot v-if="userId" />
+
+      <GatewayModal />
+      <Notifications />
+    </v-content>
+```
 
 ## Functionality guide
 A more detailed explanation of where the functionality is and what it does.
