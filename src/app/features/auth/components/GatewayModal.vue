@@ -17,6 +17,7 @@
       resetPassword: () => import('./PasswordResetForm'),
     },
     created() {
+      // The componentProps don't have to be reactive
       this.$options.componentProps = {
         loginLink: '/',
         registrationLink: '?modal=registration',
