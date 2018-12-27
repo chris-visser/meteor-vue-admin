@@ -1,7 +1,11 @@
 <template>
-  <v-flex xs12>
-    <UserList />
-  </v-flex>
+  <v-container grid-list-xl pa0>
+    <v-layout row wrap pa0>
+      <v-flex xs12>
+        <UserList />
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -9,7 +13,7 @@
 
   export default {
     components: {
-      UserList
-    }
-  }
+      UserList,
+    },
+  };
 </script>
