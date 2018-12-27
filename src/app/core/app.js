@@ -3,7 +3,6 @@ import { sync } from 'vuex-router-sync';
 
 import '../plugins';
 import '../filters';
-import '../supply';
 import '../config';
 
 import createStore from './store';

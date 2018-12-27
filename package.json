@@ -26,5 +26,6 @@
     "url": "https://github.com/chris-visser/meteor-vue-boilerplate/issues"
   },
   "homepage": "https://github.com/chris-visser/meteor-vue-boilerplate#readme",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {}
 }

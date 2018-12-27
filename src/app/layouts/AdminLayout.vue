@@ -1,47 +1,42 @@
 <template>
-  <VApp id="inspire">
+  <v-app id="inspire">
     <TheNavigation :is-visible="drawerIsVisible" />
 
     <TheHeader @toggleDrawerVisibility="drawerIsVisible = !drawerIsVisible">
       <UserLogoutButton slot="actions" />
     </TheHeader>
 
-    <VContent>
-      <VContainer fluid align-start>
-        <VLayout row wrap>
-          <v-flex xs12>
-            <VAlert
-                slot="page-header"
-                :value="showEmailUnverified"
-                color="error"
-            >
-              Please verify your e-mail address. This is required before you can do stuff in this system.
-            </VAlert>
-          </v-flex>
+    <v-content>
 
-          <slot />
+      <v-alert
+          slot="page-header"
+          :value="showEmailUnverified"
+          color="error"
+      >
+        Please verify your e-mail address. This is required before you can do stuff in this system.
+      </v-alert>
 
-          <MessageToast />
-        </VLayout>
-      </VContainer>
-    </VContent>
-  </VApp>
+
+      <slot />
+
+      <NotificationsToast />
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-  import MeteorUsersMixin from '../mixins/MeteorUsers';
   import TheHeader from '../components/TheHeader';
   import TheNavigation from '../components/TheNavigation';
-  import UserLogoutButton from '../components/UserLogoutButton';
-  import UserLoginForm from '../components/UserLoginForm';
-  import MessageToast from '../components/MessageToast';
+  import NotificationsToast from '../features/notifications/components/NotificationsToast';
+
+  import AuthRedirectMixin from '../features/auth/redirect-mixin';
+  import UserLogoutButton from '../features/auth/components/LogoutButton';
 
   export default {
-    mixins: [MeteorUsersMixin({ isPrivate: true })],
+    mixins: [AuthRedirectMixin({ isPrivate: true })],
 
     components: {
-      MessageToast,
-      UserLoginForm,
+      NotificationsToast,
       TheNavigation,
       TheHeader,
       UserLogoutButton,

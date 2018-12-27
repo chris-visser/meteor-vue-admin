@@ -1,25 +1,24 @@
 <template>
-  <VApp id="inspire">
-    <VContent>
-      <VContainer fluid fill-height>
-        <VLayout align-center justify-center>
-          <VFlex xs12 sm8 md4>
+  <v-app id="inspire">
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4>
             <slot />
-          </VFlex>
-        </VLayout>
-      </VContainer>
-    </VContent>
-  </VApp>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-  import MeteorUsersMixin from '../mixins/MeteorUsers';
+  import AuthRedirectMixin from '../features/auth/redirect-mixin';
 
   export default {
-    mixins: [MeteorUsersMixin({ isGateway: true })],
+    mixins: [AuthRedirectMixin({ isGateway: true })],
 
     components: {},
-
   };
 </script>
 
