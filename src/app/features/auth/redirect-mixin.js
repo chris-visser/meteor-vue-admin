@@ -22,24 +22,28 @@
  *
  * // Admin layout or admin page component
  * export default {
- *    mixins: [UsersMixin({ isPrivate: true })], // Will redirect any non-authenticated user to the login
+ *    // Direct non-authenticated users to the login
+ *    mixins: [UsersMixin({ isPrivate: true })],
  * }
  *
  * // A public layout or public component
  * export default {
- *    mixins: [UsersMixin({ isGateway: true })], // Will redirect any authenticated user to the private section
+ *    // Direct authenticated users to private section
+ *    mixins: [UsersMixin({ isGateway: true })],
  * }
  *
  * ```
  */
-export default ({ isGateway = false, isPrivate = false, mainPagePath = '/', loginPagePath = '/login' }) => ({
+export default ({
+  isGateway = false, isPrivate = false, mainPagePath = '/', loginPagePath = '/login',
+}) => ({
   computed: {
     userDetailsLoaded() {
       return this.$store.state.user.userDetailsLoaded;
     },
     userId() {
       return this.$store.state.user.userId;
-    }
+    },
   },
 
   mounted() {
@@ -62,7 +66,7 @@ export default ({ isGateway = false, isPrivate = false, mainPagePath = '/', logi
       const shouldRedirectToLogin = !this.userId && isPrivate;
       const shouldRedirectToDashboard = this.userId && this.userDetailsLoaded;
 
-      if(isLoading) {
+      if (isLoading) {
         // TODO show / trigger loader somehow
       } else if (shouldRedirectToLogin && isPrivate) {
         this.$router.replace(loginPagePath);

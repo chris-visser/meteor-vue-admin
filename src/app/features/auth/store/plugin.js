@@ -7,7 +7,6 @@ import { Tracker } from 'meteor/tracker';
  * @param store
  */
 export default (store) => {
-
   /**
    * Tracks changes on the user
    */

@@ -23,7 +23,9 @@ export default {
     notify({ commit }, { text, timeout = 4000, color }) {
       const id = Random.id();
 
-      commit('addMessage', { id, text, timeout, color });
+      commit('addMessage', {
+        id, text, timeout, color,
+      });
 
       setTimeout(() => {
         commit('removeMessage', { id });

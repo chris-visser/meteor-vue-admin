@@ -27,7 +27,7 @@ Meteor.methods({
       title,
       description,
       createdAt: new Date(),
-      isDone: false
+      isDone: false,
     });
   },
 });
