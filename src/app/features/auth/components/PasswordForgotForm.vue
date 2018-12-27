@@ -3,7 +3,7 @@
     <VCardTitle primary-title>
       <div>
         <h2 class="headline mb-0">
-          {{ title }}
+          Recover password
         </h2>
         <p>
           No worries. We got you covered. Just enter your e-mail address and we'll send you an e-mail with a link to
@@ -57,8 +57,6 @@
 
 export default {
   props: {
-    title: String,
-    submitTitle: String,
     loginLink: { type: String, default: '/' },
   },
   data() {
@@ -66,7 +64,7 @@ export default {
       isValid: false,
       email: '',
       error: '',
-      status: { submitTitle: this.submitTitle, color: 'secondary', dark: true },
+      status: { submitTitle: 'Send reset e-mail', color: 'secondary', dark: true },
     };
   },
 
@@ -80,7 +78,7 @@ export default {
         return;
       }
 
-      this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default' };
+      this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default', dark: true };
 
       await this.$store.dispatch('forgotPassword', { email })
         .then(() => {

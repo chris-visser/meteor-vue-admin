@@ -1,9 +1,5 @@
 <template>
-  <PasswordForgotForm
-    title="Forgot Password"
-    submit-title="Send reset e-mail"
-    loginLink="/login"
-  />
+  <PasswordForgotForm loginLink="/login" />
 </template>
 
 <script>

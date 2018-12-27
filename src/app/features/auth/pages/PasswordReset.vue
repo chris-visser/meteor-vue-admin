@@ -1,9 +1,5 @@
 <template>
-  <PasswordResetForm
-    title="Reset Password"
-    submit-title="Reset"
-    loginLink="/login"
-  />
+  <PasswordResetForm loginLink="/login" />
 </template>
 
 <script>

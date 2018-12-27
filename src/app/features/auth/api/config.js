@@ -1,4 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from 'meteor/meteor';
 
 Accounts.config({
   sendVerificationEmail: true,
@@ -13,7 +14,12 @@ Accounts.emailTemplates.enrollAccount.text = (user, url) => `${'You have been in
 + ' To activate your account, simply click the link below:\n\n'}${
   url}`;
 
-Accounts.emailTemplates.resetPassword.text = (user, url) => `Hello,\n\nTo reset your password, simply click the link below.\n\n${url.replace('/#', '')}\n\nGood luck!`;
+Accounts.emailTemplates.resetPassword.text = (user) => {
+  const { token } = user.services.password.reset;
+  const url = `${Meteor.absoluteUrl()}?modal=password-reset&token=${token}`;
+  console.log(url);
+  return `Hello,\n\nTo reset your password, simply click the link below.\n\n${url}\n\nGood luck!`;
+};
 Accounts.emailTemplates.verifyEmail = {
   subject() {
     return 'Activate your account now!';

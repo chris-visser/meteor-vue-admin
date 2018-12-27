@@ -21,7 +21,7 @@
       this.$options.componentProps = {
         loginLink: '/',
         registrationLink: '?modal=registration',
-        forgotPasswordLink: '?modal=forgotPassword',
+        forgotPasswordLink: '?modal=forgot-password',
       };
     },
     computed: {

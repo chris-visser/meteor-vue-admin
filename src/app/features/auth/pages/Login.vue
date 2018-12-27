@@ -1,10 +1,5 @@
 <template>
-  <LoginForm
-    title="Login"
-    submit-title="Login"
-    registrationLink="/registration"
-    forgotPasswordLink="/forgot-password"
-  />
+  <LoginForm registrationLink="/registration" forgotPasswordLink="/forgot-password" />
 </template>
 
 <script>
