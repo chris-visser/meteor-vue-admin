@@ -1,18 +1,16 @@
-WIP: The Meteor Vue Material Admin boilerplate is the ideal kickstarter for people that 
-require an admin system that can be easily extended. 
+This is a fully functional admin system in the form of a boilerplate. 
+It shows how Meteor, Vue and Vuetify make the ideal toolset to create dynamic, modular and 
+scalable admin systems.
 
-It implements Vue's best practices along with the Vuetify design system (Material) 
-and has a fully functional implementation of Meteor's account system. The following things 
-are covered:
+The code is structured according to Vue and Meteor best practices along with the Vuetify design system (Material).
 
-- Meteor Integration with Vuetify
-- Login, Registration, Access Control, Forgot Password
-- User Overview + Management
-- Feature based structure
-- Example CRUD (Create Read Update Delete) feature (Todos)
-- Realtime as the default
+- Meteor's account system: Login, Registration, Access Control, Forgot Password
+- Feature based structure as best practice for mid size and large apps
+- User Management + Roles
+- Todo Management as CRUD Example (Create Read Update Delete) 
+- Realtime as the default, static as the option.
 - A convenient Vuex controlled messaging system to notify users  
-- Eslint configured for Meteor + Vue
+- Eslint configured for Meteor + Vue to guard code-style
 
 ## Getting Started
 
@@ -44,62 +42,81 @@ from the console.
 To make use of the e-mail system, 
 [set the MAIL_URL environment variable according to the Meteor docs.](https://docs.meteor.com/api/email.html)
 
+## Documentation
+The documentation is a continuous work in progress. 
+The goal is to have it fully documented and maybe have a dedicated guide. 
+
+If you feel that stuff is missing from the docs or have any struggles. Please file an issue here on Github or create a topic on the 
+[Meteor Forum](https://forums.meteor.com/)!
+
+Each feature folder has its own README.md that contains a bit more in dept information about 
+what it does and how its implemented. Feel free to have a look:
+
+- [The Auth Readme](https://github.com/chris-visser/meteor-vue-admin/blob/master/src/app/features/auth/README.md)
+- [The Notifications Readme](https://github.com/chris-visser/meteor-vue-admin/blob/master/src/app/features/notifications/README.md)
+- The Users Readme (TODO)
+- The Todos Readme (TODO)
+
 ## TODOs
 
 - Document features, plugins, components.. Maybe creat a guide...
-- Make user related components more SOLID by extracting the forms from their containers
-- Implement user edit functionality
-- Simplify more
+- Implement edit functionality
 - Start testing, its not a POC anymore :)
+- Make pluggable features via NPM packages
 
 ## App Directory Structure
 The structure of the app follows
 
-### api
-This is the folder that contains things like Meteor methods, collections, publications and hooks. 
-
 ### components
-This folder should contain all the Vue components
+This folder should contain all the generic Vue components. Right now it only contains 
+some layout specific components.
 
 ### core
 This folder contains the initialization code that should not have to be changed unless you want to change 
-the way the app loads its core functionality. Examples of this functionality are the router, store, app initialization, 
-SSR and asyncData calls.
+the way the app loads its core functionality. Examples of this functionality are the router, store, app initialization and asyncData calls.
+
+### Features
+Contains all of the system's features as self-contained modules. More info follows..
 
 ### filters
-This is where you put functionality that is shared across multiple components. An example would be a standardized 
+This is where you put generic [Vue filters](https://vuejs.org/v2/guide/filters.html) that are shared across multiple components. An example would be a standardized 
 way to format dates.
 
 ### layouts
 Multiple layouts are supported. This is where you add or modify them. If no layout is configured for a page, 
-the 'default' layout is loaded. The intention is that you use [Vue Slots](https://vuejs.org/v2/guide/components-slots.html) 
+the 'admin' layout is loaded. The intention is that you use [Vue Slots](https://vuejs.org/v2/guide/components-slots.html) 
 to determine where the page is loaded. 
 
 Simply put `<slot />` on your layout where you want each page to be rendered.
 
 ### pages
-Pages are configured in the routes.js file and are loaded when its route matches. The page is rendered on a 
-designated spot within the configured layout.
+Pages are Vue components that are directly connected to routes. 
+Only generic pages should go here. They can be added in the `routes.js`. 
+The page is rendered on a designated spot within the configured layout.
 
-This folder contains some pages that are required for the onboarding flow like: Login, Registration, PasswordForgot and VerifyEmail,  
+This folder should not contain the feature specific routes, because they should 
+be added to the pages folder of the feature itself. For example, the Login page is 
+located in `./src/app/features/auth/pages`. This one is referenced in `./src/app/features/auth/routes`. 
 
 ### plugins
 Put all VueJS plugins here
 
 ### store
-This is where the Vuex store modules are located. The store already contains the user module. This 
-module provides all of the needed functionality for logging in and logging out with Meteor. The module 
-itself does not commit state changes. This is done by the `meteor-users` plugin (located) in `./store/meteor-users`.
+This is the global Vuex store where all of the Vuex store modules are loaded. 
+The store already adds the `user` and `notifications` feature store modules. 
 
-> TODO Move forgot password flow methods from components into the store and call the store from 
-the components
+### routes.js
+Contains the global routes, but also imports feature routes, added with the spread operator.
+This allows features to hook into the existing routes list.
 
-### mixins
-Use this folder to add Vue mixins. By default one mixin is present. The **gateway mixin** 
-provides redirect functionality on top of the user store. Users will be redirected automatically 
-to the login when not logged in and landing on a route that requires auth. 
+### config.js
+A centralized place where you can initialize global components and other things if needed. 
+Right now it just initializes the 2 layouts `AdminLayut` and `GatewayLayout`.
 
-> TODO provide more details about the mixin. And iterate on if this is the best place for the mixin.
+### index.html
+
+This index.html allows you to add stuff to the head and body area if needed. 
+Right now it just contains refs to the Roboto font and the Vuetify styles.
 
 ## Contribution
 
