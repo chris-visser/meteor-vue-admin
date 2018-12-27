@@ -8,10 +8,10 @@ are covered:
 - Meteor Integration with Vuetify
 - Login, Registration, Access Control, Forgot Password
 - User Overview + Management
-- Forgot Password flow
+- Feature based structure
+- Example CRUD (Create Read Update Delete) feature (Todos)
 - Realtime as the default
-- A convenient Vuex controlled messaging system to notify users 
-- Automatic redirects to the login on authenticated routes
+- A convenient Vuex controlled messaging system to notify users  
 - Eslint configured for Meteor + Vue
 
 ## Getting Started
@@ -46,7 +46,7 @@ To make use of the e-mail system,
 
 ## TODOs
 
-- Document features, plugins, components.. Maybe great a guide...
+- Document features, plugins, components.. Maybe creat a guide...
 - Make user related components more SOLID by extracting the forms from their containers
 - Implement user edit functionality
 - Simplify more
