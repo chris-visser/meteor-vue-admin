@@ -19,7 +19,7 @@
 
       <slot />
 
-      <NotificationsToast />
+      <Notifications />
     </v-content>
   </v-app>
 </template>
@@ -27,7 +27,7 @@
 <script>
   import TheHeader from '../components/TheHeader';
   import TheNavigation from '../components/TheNavigation';
-  import NotificationsToast from '../features/notifications/components/NotificationsToast';
+  import Notifications from '../features/notifications';
 
   import AuthRedirectMixin from '../features/auth/redirect-mixin';
   import UserLogoutButton from '../features/auth/components/LogoutButton';
@@ -36,7 +36,7 @@
     mixins: [AuthRedirectMixin({ isPrivate: true })],
 
     components: {
-      NotificationsToast,
+      Notifications,
       TheNavigation,
       TheHeader,
       UserLogoutButton,
