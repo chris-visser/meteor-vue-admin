@@ -57,7 +57,7 @@
           <VBtn
               flat
               small
-              to="/forgot-password"
+              :to="forgotPasswordLink"
           >
             Lost your password? Reset it here!
           </VBtn>
@@ -66,7 +66,7 @@
           <VBtn
               flat
               small
-              to="/registration"
+              :to="registrationLink"
           >
             Register yourself now!
           </VBtn>
@@ -81,6 +81,8 @@
     props: {
       title: { type: String, default: 'Login' },
       submitTitle: { type: String, default: 'Login' },
+      registrationLink: { type: String, default: '/registration' },
+      forgotPasswordLink: { type: String, default: '/forgot-password' },
     },
     data() {
       return {
@@ -105,6 +107,10 @@
         this.status = { submitTitle: 'Logging you in...', color: 'default' };
 
         await this.$store.dispatch('login', { email, password })
+          .then(() => {
+            this.status = { submitTitle: 'Login', color: 'secondary', dark: true };
+            this.error = '';
+          })
           .catch((error) => {
             this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
             this.error = error;

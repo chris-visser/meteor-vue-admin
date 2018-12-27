@@ -2,6 +2,7 @@
   <PasswordForgotForm
     title="Forgot Password"
     submit-title="Send reset e-mail"
+    loginLink="/login"
   />
 </template>
 

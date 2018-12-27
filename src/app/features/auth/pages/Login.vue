@@ -2,6 +2,8 @@
   <LoginForm
     title="Login"
     submit-title="Login"
+    registrationLink="/registration"
+    forgotPasswordLink="/forgot-password"
   />
 </template>
 

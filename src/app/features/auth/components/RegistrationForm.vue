@@ -80,7 +80,7 @@
           <VBtn
             flat
             small
-            to="/login"
+            :to="loginLink"
           >
             Back to the login!
           </VBtn>
@@ -95,6 +95,7 @@ export default {
   props: {
     title: String,
     submitTitle: String,
+    loginLink: { type: String, default: '/' },
   },
   data() {
     return {

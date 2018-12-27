@@ -3,7 +3,7 @@
     icon
     title="Logout"
     :loading="isLoading"
-    @click.once="logout"
+    @click="logout"
   >
     <VIcon>logout</VIcon>
   </VBtn>

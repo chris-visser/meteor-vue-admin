@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RegistrationForm title="Register" />
+    <RegistrationForm title="Register" loginLink="/login" />
   </div>
 </template>
 

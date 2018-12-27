@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import AuthRedirectMixin from '../features/auth/redirect-mixin';
+  import AuthRedirectMixin from '../features/auth/mixins/redirect';
 
   export default {
     mixins: [AuthRedirectMixin({ isGateway: true })],

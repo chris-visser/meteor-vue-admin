@@ -16,8 +16,7 @@
         Please verify your e-mail address. This is required before you can do stuff in this system.
       </v-alert>
 
-
-      <slot />
+      <slot v-if="userId" />
 
       <Notifications />
     </v-content>
@@ -29,7 +28,7 @@
   import TheNavigation from '../components/TheNavigation';
   import Notifications from '../features/notifications';
 
-  import AuthRedirectMixin from '../features/auth/redirect-mixin';
+  import AuthRedirectMixin from '../features/auth/mixins/redirect';
   import UserLogoutButton from '../features/auth/components/LogoutButton';
 
   export default {

@@ -52,7 +52,7 @@
           <VBtn
             flat
             small
-            to="/login"
+            :to="loginLink"
           >
             Back to login.
           </VBtn>
@@ -63,12 +63,11 @@
 </template>
 
 <script>
-import { Accounts } from 'meteor/accounts-base';
-
 export default {
   props: {
     title: String,
     submitTitle: String,
+    loginLink: { type: String, default: '/' },
   },
   data() {
     return {

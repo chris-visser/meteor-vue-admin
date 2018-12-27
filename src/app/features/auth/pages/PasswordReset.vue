@@ -2,6 +2,7 @@
   <PasswordResetForm
     title="Reset Password"
     submit-title="Reset"
+    loginLink="/login"
   />
 </template>
 
