@@ -110,5 +110,17 @@ export default {
         });
       });
     },
+
+    verifyEmail(context, { token }) {
+      return new Promise((resolve, reject) => {
+        Accounts.verifyEmail(token, (error, result) => {
+          if (error) {
+            reject(error.reason);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    },
   },
 };

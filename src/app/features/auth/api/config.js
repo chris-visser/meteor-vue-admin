@@ -1,4 +1,21 @@
 import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from 'meteor/meteor';
+/* eslint no-console: off */
+const authConfig = Meteor.settings.public.auth || {};
+
+/**
+ * Generates a link based on a modal based gateway or a redirect based
+ * @param token
+ * @param action
+ * @returns {string}
+ */
+const generateLink = (token, action) => {
+  if (authConfig.gatewayType === 'redirect') {
+    return `${Meteor.absoluteUrl()}${action}?token=${token}`;
+  }
+
+  return `${Meteor.absoluteUrl()}?modal=${action}&token=${token}`;
+};
 
 Accounts.config({
   sendVerificationEmail: true,
@@ -13,12 +30,19 @@ Accounts.emailTemplates.enrollAccount.text = (user, url) => `${'You have been in
 + ' To activate your account, simply click the link below:\n\n'}${
   url}`;
 
-Accounts.emailTemplates.resetPassword.text = (user, url) => `Hello,\n\nTo reset your password, simply click the link below.\n\n${url.replace('/#', '')}\n\nGood luck!`;
+Accounts.emailTemplates.resetPassword.text = (user) => {
+  const { token } = user.services.password.reset;
+  const url = generateLink(token, 'reset-password');
+  console.log(url);
+  return `Hello,\n\nTo reset your password, simply click the link below.\n\n${url}\n\nGood luck!`;
+};
 Accounts.emailTemplates.verifyEmail = {
   subject() {
     return 'Activate your account now!';
   },
-  text(user, url) {
-    return `Hey ${user.profile.displayName}! Verify your e-mail by following this link: ${url.replace('/#', '')}`;
+  text(user) {
+    const url = `${Meteor.absoluteUrl()}?action=verify-email&token=${user.services.email.verificationTokens[0].token}`;
+    console.log(url);
+    return `Hey ${user.profile.displayName}! Verify your e-mail by following this link: ${url}`;
   },
 };

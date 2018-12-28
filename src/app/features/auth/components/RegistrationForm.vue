@@ -6,7 +6,7 @@
     >
       <div>
         <h2 class="headline pb-0">
-          {{ title }}
+          Registration
         </h2>
         <p class="mb-0">
           You can create your new account here.
@@ -93,7 +93,6 @@
 <script>
 export default {
   props: {
-    title: String,
     submitTitle: String,
     loginLink: { type: String, default: '/' },
   },

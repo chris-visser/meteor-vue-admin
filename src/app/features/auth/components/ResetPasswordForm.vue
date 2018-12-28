@@ -3,11 +3,11 @@
     <VCardTitle primary-title>
       <div>
         <h2 class="headline mb-0">
-          {{ title }}
+          Reset your password here
         </h2>
         <p>
-          No worries. We got you covered. Just enter your e-mail address and we'll send you an e-mail with a link to
-          reset your password.
+          Please enter your new password below and you will be good to go! If this was a mistake, simply close this
+          page or return to the login by clicking the link below the form.
         </p>
       </div>
     </VCardTitle>
@@ -18,14 +18,23 @@
         @submit.prevent="submit"
       >
         <VTextField
-          v-model="email"
-          v-validate="'required|email'"
+          v-model="password"
+          v-validate="'required'"
           autofocus
+          type="password"
           color="dark"
-          type="email"
-          label="E-mail address"
-          data-vv-name="email"
-          :error-messages="errors.collect('email')"
+          label="Password"
+          data-vv-name="password"
+          :error-messages="errors.collect('password')"
+        />
+        <VTextField
+          v-model="repeatPassword"
+          v-validate="'required'"
+          type="password"
+          color="dark"
+          data-vv-name="repeatPassword"
+          label="Repeat Password"
+          :error-messages="errors.collect('repeatPassword')"
         />
 
         {{ error }}
@@ -54,19 +63,19 @@
 </template>
 
 <script>
-
 export default {
   props: {
-    title: String,
     submitTitle: String,
     loginLink: { type: String, default: '/' },
+    tokenFrom: { type: String, default: 'query' }
   },
   data() {
     return {
       isValid: false,
-      email: '',
+      password: '',
+      repeatPassword: '',
       error: '',
-      status: { submitTitle: this.submitTitle, color: 'secondary', dark: true },
+      status: { submitTitle: 'Reset', color: 'secondary', dark: true },
     };
   },
 
@@ -74,17 +83,19 @@ export default {
     async submit() {
       await this.$validator.validateAll();
 
-      const { email } = this;
+      const { password } = this;
+      const { token } = this.$route.query;
 
       if (!this.isValid) {
         return;
       }
 
-      this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default' };
+      this.status = { submitTitle: 'Saving the new password...', color: 'default' };
 
-      await this.$store.dispatch('forgotPassword', { email })
+      await this.$store.dispatch('resetPassword', { token, password })
         .then(() => {
-          this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
+          this.$router.replace('/');
+          this.status = { submitTitle: 'Reset', color: 'secondary', dark: true };
         })
         .catch((error) => {
           this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };

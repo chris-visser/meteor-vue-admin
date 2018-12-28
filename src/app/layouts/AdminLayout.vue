@@ -7,68 +7,23 @@
     </TheHeader>
 
     <v-content>
-
-      <v-alert
-          slot="page-header"
-          :value="showEmailUnverified"
-          color="error"
-      >
-        Please verify your e-mail address. This is required before you can do stuff in this system.
-      </v-alert>
-
-      <slot v-if="userId" />
-
+      <slot />
       <Notifications />
     </v-content>
   </v-app>
 </template>
 
 <script>
-  import TheHeader from '../components/TheHeader';
-  import TheNavigation from '../components/TheNavigation';
-  import Notifications from '../features/notifications';
-
-  import AuthRedirectMixin from '../features/auth/mixins/redirect';
-  import UserLogoutButton from '../features/auth/components/LogoutButton';
-
   export default {
-    mixins: [AuthRedirectMixin({ isPrivate: true })],
-
     components: {
-      Notifications,
-      TheNavigation,
-      TheHeader,
-      UserLogoutButton,
+      TheNavigation: () => import('../components/TheNavigation'),
+      TheHeader: () => import('../components/TheHeader'),
+      Notifications: () => import('../features/notifications/components/NotificationsToast'),
+      UserLogoutButton: () => import('../features/auth/components/LogoutButton'),
     },
     data: () => ({
       drawerIsVisible: true,
-      requiresAuth: true,
     }),
-    mounted() {
-      if (this.userDetailsLoaded) {
-        this.$store.dispatch('notify', { text: `Welcome back ${this.$store.state.user.profile.displayName}` });
-      }
-    },
-    computed: {
-      showEmailUnverified() {
-        const isLoading = !this.$store.state.user.userDetailsLoaded;
-
-        return !isLoading && !this.$store.state.user.isEmailVerified;
-      },
-      userDetailsLoaded() {
-        return this.$store.state.user.userDetailsLoaded;
-      },
-      userId() {
-        return this.$store.state.user.userId;
-      },
-    },
-    watch: {
-      userDetailsLoaded(userDetailsLoaded) {
-        if (userDetailsLoaded) {
-          this.$store.dispatch('notify', { text: `Welcome back ${this.$store.state.user.profile.displayName}` });
-        }
-      },
-    },
   };
 </script>
 

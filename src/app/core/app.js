@@ -3,12 +3,13 @@ import { sync } from 'vuex-router-sync';
 
 import '../plugins';
 import '../filters';
-import '../config';
 
 import createStore from './store';
 import createRouter from './router';
 
-import Root from './Root.vue';
+import Root from '../Root.vue';
+
+const hyphenToCamel = str => str.replace(/-([a-z])/g, chunk => chunk[1].toUpperCase());
 
 /**
  * This function is called on both client and server
@@ -17,6 +18,17 @@ import Root from './Root.vue';
 function createApp() {
   const router = createRouter();
   const store = createStore();
+
+
+  router.beforeEach(({ query }, from, next) => {
+    if (query.action) {
+      store.dispatch(hyphenToCamel(query.action), query);
+      router.replace({ query: {} });
+    }
+
+    next();
+  });
+
 
   const app = new Vue({
     el: '#app', // Mount to the #app element

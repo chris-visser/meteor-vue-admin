@@ -2,9 +2,10 @@
   <v-dialog
       v-model="show"
       max-width="350"
+      content-class="page-based"
       persistent
   >
-    <component :is="activeComponent" v-bind="$options.componentProps"/>
+    <component :is="activeComponent" v-bind="$options.componentProps" />
   </v-dialog>
 </template>
 
@@ -13,14 +14,20 @@
     components: {
       login: () => import('./LoginForm'),
       registration: () => import('./RegistrationForm'),
-      forgotPassword: () => import('./PasswordForgotForm'),
-      resetPassword: () => import('./PasswordResetForm'),
+      forgotPassword: () => import('./ForgotPasswordForm'),
+      resetPassword: () => import('./ResetPasswordForm'),
     },
     created() {
+      // The componentProps don't have to be reactive
       this.$options.componentProps = {
         loginLink: '/',
         registrationLink: '?modal=registration',
-        forgotPasswordLink: '?modal=forgotPassword',
+        forgotPasswordLink: '?modal=forgot-password',
+      };
+    },
+    data() {
+      return {
+        isPageBased: true,
       };
     },
     computed: {
@@ -31,5 +38,5 @@
         return !this.$store.state.user.userId;
       },
     },
-  }
+  };
 </script>

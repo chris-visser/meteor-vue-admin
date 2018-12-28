@@ -79,8 +79,6 @@
 <script>
   export default {
     props: {
-      title: { type: String, default: 'Login' },
-      submitTitle: { type: String, default: 'Login' },
       registrationLink: { type: String, default: '/registration' },
       forgotPasswordLink: { type: String, default: '/forgot-password' },
     },
