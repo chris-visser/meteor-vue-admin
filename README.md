@@ -7,6 +7,7 @@ The code is structured according to Vue and Meteor best practices along with the
 - Meteor's account system: Login, Registration, Access Control, Forgot Password
 - Feature based structure as best practice for mid size and large apps
 - User Management + Roles
+- Ability to choose between modal based or redirect based authentication
 - Todo Management as CRUD Example (Create Read Update Delete) 
 - Realtime as the default, static as the option.
 - A convenient Vuex controlled messaging system to notify users  
@@ -30,6 +31,8 @@ npm start
 ```
 
 Visit http://localhost:3000 and you are up and running!
+
+> Optionally you can switch to a modal based authentication flow by setting the 'gatewayMode' in your `./src/settings.json`.
 
 ### First time visit
 On first time visit you will ofcourse have to register a new account. The first account 
