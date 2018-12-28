@@ -1,3 +1,4 @@
+import authRoutes from './features/auth/routes';
 import usersRoutes from './features/users/routes';
 import todosRoutes from './features/todos/routes';
 
@@ -7,6 +8,7 @@ export default [
     name: 'dashboard',
     component: () => import('./pages/Dashboard.vue'),
   },
+  ...authRoutes,
   ...usersRoutes,
   ...todosRoutes,
   {

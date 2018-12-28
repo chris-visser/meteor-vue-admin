@@ -84,7 +84,7 @@ export default {
       await this.$validator.validateAll();
 
       const { password } = this;
-      const { token } = this.$route[this.tokenFrom];
+      const { token } = this.$route.query;
 
       if (!this.isValid) {
         return;

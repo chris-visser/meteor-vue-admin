@@ -1,32 +1,36 @@
-export default [
+import config from './config';
+
+const redirectRoutes = [
   {
     path: '/login',
     name: 'login',
     component: () => import('./pages/Login.vue'),
-    meta: { layout: 'gateway' },
+    meta: { isPublic: true },
   },
   {
     path: '/registration',
     name: 'registration',
     component: () => import('./pages/Registration.vue'),
-    meta: { layout: 'gateway' },
+    meta: { isPublic: true },
   },
   {
     path: '/forgot-password',
     name: 'forgot-password',
-    component: () => import('./pages/PasswordForgot.vue'),
-    meta: { layout: 'gateway' },
+    component: () => import('./pages/ForgotPassword.vue'),
+    meta: { isPublic: true },
   },
   {
-    path: '/reset-password/:token',
+    path: '/reset-password',
     name: 'reset-password',
-    component: () => import('./pages/PasswordReset.vue'),
-    meta: { layout: 'gateway' },
+    component: () => import('./pages/ResetPassword.vue'),
+    meta: { isPublic: true },
   },
   {
-    path: '/verify-email/:token',
+    path: '/verify-email',
     name: 'verify-email',
     component: () => import('./pages/VerifyEmail.vue'),
-    meta: { layout: 'gateway' },
+    meta: { isPublic: true },
   },
 ];
+
+export default config.gatewayType === 'redirect' ? redirectRoutes : [];

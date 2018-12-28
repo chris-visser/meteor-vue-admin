@@ -59,6 +59,7 @@ what it does and how its implemented. Feel free to have a look:
 
 ## TODOs
 
+- Introduce semver
 - Document features, plugins, components.. Maybe creat a guide...
 - Implement edit functionality
 - Start testing, its not a POC anymore :)

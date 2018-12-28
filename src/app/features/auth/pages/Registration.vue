@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <RegistrationForm title="Register" loginLink="/login" />
-  </div>
+  <RegistrationForm title="Register" loginLink="/login" />
 </template>
 
 <script>
-import RegistrationForm from '../components/RegistrationForm';
+  import RegistrationForm from '../components/RegistrationForm';
 
-export default {
-  components: {
-    RegistrationForm,
-  },
-};
+  export default {
+    components: {
+      RegistrationForm,
+    },
+  };
 </script>
