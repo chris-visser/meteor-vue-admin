@@ -38,7 +38,7 @@ import config from '../config';
  */
 
 
-export default config.gatewayType !==  'redirect' ? {} : {
+export default config.gatewayType !== 'redirect' ? {} : {
   computed: {
     userDetailsLoaded() {
       return this.$store.state.user.userDetailsLoaded;
@@ -60,11 +60,10 @@ export default config.gatewayType !==  'redirect' ? {} : {
 
   methods: {
     trackUser() {
-      // const publicRoutes = [];
       // userId is set first, because it comes from the session
       // userDetails come from a publication. The time between a userId and when
       // details are available is the loading time.
-      const isPublic = this.$route.meta.isPublic;
+      const { isPublic } = this.$route.meta;
 
       const isLoading = this.userId && !this.userDetailsLoaded;
       const shouldRedirectToLogin = !this.userId && !isPublic;

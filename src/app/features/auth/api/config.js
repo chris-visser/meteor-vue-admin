@@ -1,6 +1,6 @@
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
-
+/* eslint no-console: off */
 const authConfig = Meteor.settings.public.auth || {};
 
 /**
@@ -10,7 +10,7 @@ const authConfig = Meteor.settings.public.auth || {};
  * @returns {string}
  */
 const generateLink = (token, action) => {
-  if(authConfig.gatewayType === 'redirect') {
+  if (authConfig.gatewayType === 'redirect') {
     return `${Meteor.absoluteUrl()}${action}?token=${token}`;
   }
 

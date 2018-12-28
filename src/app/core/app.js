@@ -9,9 +9,7 @@ import createRouter from './router';
 
 import Root from '../Root.vue';
 
-const hyphenToCamel = (str) => {
-  return str.replace(/-([a-z])/g, (chunk) => chunk[1].toUpperCase());
-};
+const hyphenToCamel = str => str.replace(/-([a-z])/g, chunk => chunk[1].toUpperCase());
 
 /**
  * This function is called on both client and server

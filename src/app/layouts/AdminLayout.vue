@@ -18,7 +18,7 @@
     components: {
       TheNavigation: () => import('../components/TheNavigation'),
       TheHeader: () => import('../components/TheHeader'),
-      Notifications: () => import('../features/notifications'),
+      Notifications: () => import('../features/notifications/components/NotificationsToast'),
       UserLogoutButton: () => import('../features/auth/components/LogoutButton'),
     },
     data: () => ({
