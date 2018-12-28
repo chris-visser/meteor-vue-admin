@@ -33,4 +33,4 @@ const redirectRoutes = [
   },
 ];
 
-export default config.gatewayType === 'redirect' ? redirectRoutes : [];
+export default config.gatewayMode === 'redirect' ? redirectRoutes : [];

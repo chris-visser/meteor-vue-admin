@@ -1,8 +1,9 @@
 # Auth feature
 This feature takes care of the whole authentication and authorization part. 
 It connects Meteor's auth system to Vue using components, mixins and the Vuex Store.
-The auth feature takes a page based approach where the login, registration, forgot-password 
-and reset-password forms each have their own route. 
+
+The system allows 2 types of onboarding: Redirect and Modal based. Both options have 
+pros and cons which you can read about after the usage part. 
 
 ## Usage
 
@@ -20,125 +21,122 @@ export default {
 };
 ```
 
-The auth feature supports 2 types of gateway. One is modal based and the other is redirect based.
-
-### Redirect based login
-Add the auth routes to the global routes like below:
+The second step is to include the gateway. The gateway handles which type of onboarding 
+logic is used based on the "gatewayMode" setting. The only thing you need to do is add 
+it to the Root.vue file like below:
 
 ```javascript
-import authRoutes from './features/auth/routes';
+<template>
+  <the-gateway :adminLayout="adminLayout" :publicLayout="publicLayout">
+    <router-view />
+  </the-gateway>
 
-export default [
-  {
-    path: '/',
-    name: 'dashboard',
-    component: () => import('./pages/Dashboard.vue'),
-  },
-  ...authRoutes,
-  {
-    path: '*',
-    name: 'not-found',
-    component: () => import('./pages/NotFound.vue'),
-  },
-];
+</template>
+
+<script>
+  import TheGateway from './features/auth/components/TheGateway';
+
+  export default {
+    components: {
+      TheGateway,
+    },
+    data() {
+      return {
+        adminLayout: () => import('./layouts/AdminLayout'),
+        publicLayout: () => import('./layouts/PublicLayout'),
+      }
+    }
+  };
+</script>
 ```
 
-Connect the auth store and the plugin to the global store. Since the auth store contains user info
-it should be added to the store as 'user'.
+The gateway component accepts 2 arguments: adminLayout and publicLayout. 
+These should be your layout components and they will be loaded whenever they are 
+needed and depending on the "gatewayMode" setting. 
 
-As a final step add the redirect mixin to the layout component(s) where needed. On your 
-admin component use this: 
+When gatewayMode is set to "modal", the publicLayout property is optional. 
+
+
+### Redirect based auth
+
+You can enable redirect based auth via the `./src/settings.json` file like below:
 
 ```javascript
-import AuthRedirectMixin from '../features/auth/redirect-mixin';
-
-export default {
-  mixins: [AuthRedirectMixin({ isPrivate: true })],
+{
+  "public": {
+    "auth": {
+      "gatewayMode": "redirect"
+    }
+  }
 }
 ```
 
-On your gateway layout use this: 
+This will set the auth gateway to redirect the user from and to the login page. If a page 
+is not flagged as `isPublic: true` and the user lands un-authenticated on this page, he/she 
+will automatically be redirected to the `/login` page. The other way round also applies: 
+Whenever a user logs in from a public page, he/she will be redirected to the `/` (admin).
+
+Users can navigate to 4 different pages on the gateway:
+
+- `/login`: The login page
+- `/registration`: The registration page
+- `/forgot-password`: Allows users to enter a mail which sends them a reset e-mail
+- `/reset-password`: Shows a change password form to allow the user to reset his/her password
+
+### Pros
+- The public layout allows for additional information about the system to be shown.
+- Gives a secure feeling, because users go 'trough a wall' to get to the private area.
+- Clean URL's
+
+### Cons
+- No chance to show what's inside
+- User steps away from the initially requested page (interrupted workflow)
+
+
+### Modal based auth
+
+You can enable the modal based approach in `./src/settings.json` like below:
 
 ```javascript
-import AuthRedirectMixin from '../features/auth/redirect-mixin';
-
-export default {
-  mixins: [AuthRedirectMixin({ isGateway: true })],
+{
+  "public": {
+    "auth": {
+      "gatewayMode": "modal"
+    }
+  }
 }
 ```
 
-By not adding the mixin or the routes, you can create your own auth flow and use the 
-login component for example in a modal. 
+Modal based auth will show a modal / dialog with a login screen whenever an un-authenticated use lands 
+on the system. The modal is controlled via the url. This allows users to directly 
+navigate to the registration screen. 
 
-### Modal based login
-Since redirect based login is the default, remove the auth routes from `src/app/routes.js`.
+Notice that the urls are slightly different from the redirect based approach. 
+This is because, the user never actually navigates away from the page and therefore its a 'mode' within 
+this page.
 
-Now change the `AdminLayout` from:
-```javascript
-  import TheHeader from '../components/TheHeader';
-  import TheNavigation from '../components/TheNavigation';
-  import Notifications from '../features/notifications';
+- `?modal=login`: The login page
+- `?modal=registration`: The registration page
+- `?modal=forgot-password`: Allows users to enter a mail which sends them a reset e-mail
+- `?modal=reset-password`: Shows a change password form to allow the user to reset his/her password
 
-  import AuthRedirectMixin from '../features/auth/mixins/redirect';
-  import UserLogoutButton from '../features/auth/components/LogoutButton';
+### Pros
+- User stays on the page he/she initialy requested
+- Less layouts to worry about
+- Gives hints about what the system is and does, before actually being logged in
 
-  export default {
-    mixins: [AuthRedirectMixin({ isPrivate: true })],
+### Cons
+- Might give an insecure feeling to the user (since the private area is visible)
 
-    components: {
-      Notifications,
-      TheNavigation,
-      TheHeader,
-      UserLogoutButton,
-    },
-    ...
-```
-To this:
-```javascript
-  import TheHeader from '../components/TheHeader';
-  import TheNavigation from '../components/TheNavigation';
-  import Notifications from '../features/notifications';
-
-  import GatewayModal from '../features/auth/components/GatewayModal'; // New
-  import UserLogoutButton from '../features/auth/components/LogoutButton';
-
-  export default {
-
-    components: {
-      GatewayModal, // New
-      Notifications,
-      TheNavigation,
-      TheHeader,
-      UserLogoutButton,
-    },
-```
-
-Also add the <GatewayModal /> component to the template:
-```javascript
-    <v-content>
-
-      <v-alert
-          slot="page-header"
-          :value="showEmailUnverified"
-          color="error"
-      >
-        Please verify your e-mail address. This is required before you can do stuff in this system.
-      </v-alert>
-
-      <slot v-if="userId" />
-
-      <GatewayModal />
-      <Notifications />
-    </v-content>
-```
 
 ## Functionality guide
 A more detailed explanation of where the functionality is and what it does.
 
-### Redirect Mixin
-The redirect-mixing will ensure that non-authenticated users will be automatically 
-redirected to the 'gateway'. The gateway is essentially the empty layout with 
-one of 4 pages active: Login, Registration, ForgotPassword or ResetPassword. 
+### The Auth Mixin
+The auth mixin will be an empty object or an actual mixin depending on the `gatewayMode` setting 
+Only when its set to redirect, it will act as a mixin. This mixin ensures
+that users will be automatically redirected from and to the 'gateway' depending on there 
+authenticated state. 
 
 Whenever people log-in or when they land on the system with an active session 
 (happens on refresh or from an external link), they will be automatically directed 
@@ -150,10 +148,14 @@ user registers, he/she becomes automatically the owner. Owners cannot be removed
 from the system using the UI. 
 
 ### Auth related emails
-Some procedures require e-mail verification. Right now, only 'registration' requires it.
-An e-mail will be sent to the user with a link that allows them to confirm. When no 
-e-mail configuration is set, the verification e-mail will end up on the server console 
-allowing a convinient way for a developer to test this flow locally.
+Some procedures require e-mail verification.
+An e-mail will be sent to the user with a link that allows them to confirm their action. 
+When no e-mail configuration is set, the verification e-mail will end up on the 
+server console allowing a convenient way for a developer to test this flow locally.
+
+The url in the reset password url in the e-mail is slightly different depending on the selected 
+`gatewayMode`. In case of "redirect" it will be `/reset-password?token={token}`. In case of "modal" 
+it will be `?modal=reset-password&token={token}` 
 
 ### User session and the Vuex Store
 The user session is kept in the Vuex store which allows other components to work 

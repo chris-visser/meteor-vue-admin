@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="adminLayout" v-if="userId || $options.gatewayType === 'modal'">
+    <component :is="adminLayout" v-if="userId || $options.gatewayMode === 'modal'">
       <v-alert
           slot="page-header"
           :value="showEmailUnverified"
@@ -12,7 +12,7 @@
       <slot />
       <GatewayModal />
     </component>
-    <component :is="publicLayout" v-if="!userDetailsLoaded && $options.gatewayType === 'redirect'">
+    <component :is="publicLayout" v-if="publicLayout && !userDetailsLoaded && $options.gatewayMode === 'redirect'">
       <slot />
     </component>
   </div>
@@ -23,29 +23,35 @@
   import AuthMixin from '../mixins/auth';
 
   /**
-   * Depending on the 'gatewayType' setting.
+   * Depending on the 'gatewayMode' setting.
    */
   export default {
     mixins: [AuthMixin],
 
     props: {
       adminLayout: Function,
-      publicLayout: Function,
+      publicLayout: { type: Function, default: null },
     },
 
     components: {
       GatewayModal: () => import('./GatewayModal'),
     },
+
     data: () => ({
       requiresAuth: true,
     }),
+
     mounted() {
-      this.$options.gatewayType = authConfig.gatewayType;
+      this.$options.gatewayMode = authConfig.gatewayMode;
+      if(!this.publicLayout && authConfig.gatewayMode === 'redirect') {
+        throw new Error('The "publicLayout" property is required on the-gateway component if gatewayMode is "redirect"')
+      }
 
       if (this.userDetailsLoaded) {
         this.$store.dispatch('notify', { text: `Welcome back ${this.$store.state.user.profile.displayName}` });
       }
     },
+
     computed: {
       showEmailUnverified() {
         const isLoading = !this.$store.state.user.userDetailsLoaded;

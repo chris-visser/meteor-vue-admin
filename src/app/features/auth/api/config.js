@@ -10,7 +10,7 @@ const authConfig = Meteor.settings.public.auth || {};
  * @returns {string}
  */
 const generateLink = (token, action) => {
-  if (authConfig.gatewayType === 'redirect') {
+  if (authConfig.gatewayMode === 'redirect') {
     return `${Meteor.absoluteUrl()}${action}?token=${token}`;
   }
 

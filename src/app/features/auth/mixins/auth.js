@@ -38,7 +38,7 @@ import config from '../config';
  */
 
 
-export default config.gatewayType !== 'redirect' ? {} : {
+export default config.gatewayMode !== 'redirect' ? {} : {
   computed: {
     userDetailsLoaded() {
       return this.$store.state.user.userDetailsLoaded;
