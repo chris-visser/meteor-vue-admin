@@ -1,19 +1,19 @@
 <template>
-  <VToolbar
+  <v-toolbar
     :clipped-left="$vuetify.breakpoint.lgAndUp"
     color="primary"
     app
     fixed
   >
-    <VToolbarSideIcon @click.stop="toggleDrawer" />
-    <VToolbarTitle>Cloudspider - Admin</VToolbarTitle>
+    <v-toolbar-side-icon @click.stop="toggleDrawer" />
+    <v-toolbar-title>Cloudspider - Admin</v-toolbar-title>
 
     <slot name="main" />
 
-    <VSpacer />
+    <v-spacer />
 
-    <slot name="actions" />
-  </VToolbar>
+    <slot name="the-header-actionbar" />
+  </v-toolbar>
 </template>
 
 <script>

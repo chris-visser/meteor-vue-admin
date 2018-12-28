@@ -1,6 +1,6 @@
 <template>
-  <VCard>
-    <VCardTitle primary-title>
+  <v-card>
+    <v-card-title primary-title>
       <div>
         <h2 class="headline mb-0">
           Reset your password here
@@ -10,14 +10,11 @@
           page or return to the login by clicking the link below the form.
         </p>
       </div>
-    </VCardTitle>
+    </v-card-title>
 
-    <VCardText>
-      <VForm
-        v-model="isValid"
-        @submit.prevent="submit"
-      >
-        <VTextField
+    <v-card-text>
+      <v-form v-model="isValid" @submit.prevent="submit">
+        <v-text-field
           v-model="password"
           v-validate="'required'"
           autofocus
@@ -27,7 +24,7 @@
           data-vv-name="password"
           :error-messages="errors.collect('password')"
         />
-        <VTextField
+        <v-text-field
           v-model="repeatPassword"
           v-validate="'required'"
           type="password"
@@ -39,27 +36,27 @@
 
         {{ error }}
 
-        <VBtn
+        <v-btn
           type="submit"
           :color="status.color"
           :dark="status.dark"
           block
         >
           {{ status.submitTitle }}
-        </VBtn>
+        </v-btn>
 
         <p class="text-lg-right mt-4">
-          <VBtn
+          <v-btn
             flat
             small
             :to="loginLink"
           >
             Back to login.
-          </VBtn>
+          </v-btn>
         </p>
-      </VForm>
-    </VCardText>
-  </VCard>
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

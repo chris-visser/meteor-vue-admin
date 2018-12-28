@@ -1,20 +1,20 @@
 <template>
-  <VCard>
-    <VCardTitle primary-title>
+  <v-card>
+    <v-card-title primary-title>
       <div>
         <h2 class="headline mb-0">
           Create new todo
         </h2>
       </div>
-    </VCardTitle>
+    </v-card-title>
 
-    <VCardText>
-      <VForm
+    <v-card-text>
+      <v-form
           ref="form"
           v-model="isValid"
           @submit.prevent="submit"
       >
-        <VTextField
+        <v-text-field
             v-model="title"
             v-validate="'required'"
             autofocus
@@ -24,7 +24,7 @@
             data-vv-name="title"
             :error-messages="errors.collect('title')"
         />
-        <VTextField
+        <v-text-field
             v-model="description"
             v-validate="'required'"
             autofocus
@@ -36,14 +36,14 @@
         />
 
 
-        <VAlert
+        <v-alert
             :value="!!error"
             color="error"
             icon="warning"
             outline
         >
           {{ error }}
-        </VAlert>
+        </v-alert>
 
 
         <VBtn
@@ -55,9 +55,9 @@
         >
           {{ status.submitTitle }}
         </VBtn>
-      </VForm>
-    </VCardText>
-  </VCard>
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

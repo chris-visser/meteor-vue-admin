@@ -1,11 +1,11 @@
 <template>
-  <VAlert
+  <v-alert
       value="true"
       :color="status.color"
       outline
   >
     {{ status.title }}
-  </VAlert>
+  </v-alert>
 </template>
 
 <script>

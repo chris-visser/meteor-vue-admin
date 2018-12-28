@@ -2,7 +2,6 @@
   <the-gateway :adminLayout="adminLayout" :publicLayout="publicLayout">
     <router-view />
   </the-gateway>
-
 </template>
 
 <script>
@@ -16,7 +15,7 @@
       return {
         adminLayout: () => import('./layouts/AdminLayout'),
         publicLayout: () => import('./layouts/PublicLayout'),
-      }
-    }
+      };
+    },
   };
 </script>

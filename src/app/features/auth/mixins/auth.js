@@ -1,43 +1,8 @@
 import config from '../config';
 
 /**
- * This is a function that returns a mixin to allow some additional options to be passed
- *
- * Based on the component's 'isGateway' or 'isPrivate' setting this mixin will
- * redirect the user from and to the login page. This is useful for pages where
- * authentication is required. Not setting anything will make this mixin treat
- * the page as 'public' and it will never do any redirects
- *
- * @param {Boolean} [isGateway=false] - Specifies that this is a gateway page.
- * Logged in users will be redirected to the mainPage
- * @param {Boolean} [isPrivate=false] - Specifies that this is a private page.
- * Un-authenticated users will be redirected to the loginPage
- * @param {String} [mainPagePath="/"] - Allows for a custom mainPage.
- * Logged in users will be redirected to this path
- * @param {String} [loginPagePath="/"] - Allows for a custom loginPage.
- * Un-authenticated users will be redirected to this path
- * @returns {{mounted: function, computed: Object, watch: Object, methods: Object}}
- *
- * @example
- * ```
- *
- *
- * // Admin layout or admin page component
- * export default {
- *    // Direct non-authenticated users to the login
- *    mixins: [UsersMixin({ isPrivate: true })],
- * }
- *
- * // A public layout or public component
- * export default {
- *    // Direct authenticated users to private section
- *    mixins: [UsersMixin({ isGateway: true })],
- * }
- *
- * ```
+ * When auth mode is redirect, this mixin will redirect users from or to private pages
  */
-
-
 export default config.gatewayMode !== 'redirect' ? {} : {
   computed: {
     userDetailsLoaded() {

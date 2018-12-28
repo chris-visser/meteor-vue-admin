@@ -1,20 +1,20 @@
 <template>
-  <VCard>
-    <VCardTitle primary-title>
+  <v-card>
+    <v-card-title primary-title>
       <div>
         <h2 class="headline mb-0">
           Cloudspider Admin
         </h2>
         <p>Welcome! Please login first</p>
       </div>
-    </VCardTitle>
+    </v-card-title>
 
-    <VCardText>
-      <VForm
+    <v-card-text>
+      <v-form
           v-model="isValid"
           @submit.prevent="submit"
       >
-        <VTextField
+        <v-text-field
             v-model="email"
             v-validate="'required|email'"
             autofocus
@@ -24,7 +24,7 @@
             data-vv-name="email"
             :error-messages="errors.collect('email')"
         />
-        <VTextField
+        <v-text-field
             v-model="password"
             v-validate="'required'"
             type="password"
@@ -34,46 +34,28 @@
             :error-messages="errors.collect('password')"
         />
 
-        <VAlert
-            :value="!!error"
-            color="error"
-            icon="warning"
-            outline
-        >
+        <v-alert :value="!!error" color="error" icon="warning" outline>
           {{ error }}
-        </VAlert>
+        </v-alert>
 
 
-        <VBtn
-            type="submit"
-            :color="status.color"
-            :dark="status.dark"
-            block
-        >
+        <v-btn type="submit" :color="status.color" :dark="status.dark" block>
           {{ status.submitTitle }}
-        </VBtn>
+        </v-btn>
 
         <p class="text-lg-right mt-4">
-          <VBtn
-              flat
-              small
-              :to="forgotPasswordLink"
-          >
+          <v-btn flat small :to="forgotPasswordLink">
             Lost your password? Reset it here!
-          </VBtn>
+          </v-btn>
         </p>
         <p class="text-lg-right mt-4">
-          <VBtn
-              flat
-              small
-              :to="registrationLink"
-          >
+          <v-btn flat small :to="registrationLink">
             Register yourself now!
-          </VBtn>
+          </v-btn>
         </p>
-      </VForm>
-    </VCardText>
-  </VCard>
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

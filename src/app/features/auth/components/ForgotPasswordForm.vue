@@ -1,6 +1,6 @@
 <template>
-  <VCard>
-    <VCardTitle primary-title>
+  <v-card>
+    <v-card-title primary-title>
       <div>
         <h2 class="headline mb-0">
           Recover password
@@ -10,85 +10,72 @@
           reset your password.
         </p>
       </div>
-    </VCardTitle>
+    </v-card-title>
 
-    <VCardText>
-      <VForm
-        v-model="isValid"
-        @submit.prevent="submit"
-      >
-        <VTextField
-          v-model="email"
-          v-validate="'required|email'"
-          autofocus
-          color="dark"
-          type="email"
-          label="E-mail address"
-          data-vv-name="email"
-          :error-messages="errors.collect('email')"
+    <v-card-text>
+      <v-form v-model="isValid" @submit.prevent="submit">
+        <v-text-field
+            v-model="email"
+            v-validate="'required|email'"
+            autofocus
+            color="dark"
+            type="email"
+            label="E-mail address"
+            data-vv-name="email"
+            :error-messages="errors.collect('email')"
         />
 
         {{ error }}
 
-        <VBtn
-          type="submit"
-          :color="status.color"
-          :dark="status.dark"
-          block
-        >
+        <v-btn type="submit" :color="status.color" :dark="status.dark" block>
           {{ status.submitTitle }}
-        </VBtn>
+        </v-btn>
 
         <p class="text-lg-right mt-4">
-          <VBtn
-            flat
-            small
-            :to="loginLink"
-          >
+          <v-btn flat small :to="loginLink">
             Back to login.
-          </VBtn>
+          </v-btn>
         </p>
-      </VForm>
-    </VCardText>
-  </VCard>
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
-
-export default {
-  props: {
-    loginLink: { type: String, default: '/' },
-  },
-  data() {
-    return {
-      isValid: false,
-      email: '',
-      error: '',
-      status: { submitTitle: 'Send reset e-mail', color: 'secondary', dark: true },
-    };
-  },
-
-  methods: {
-    async submit() {
-      await this.$validator.validateAll();
-
-      const { email } = this;
-
-      if (!this.isValid) {
-        return;
-      }
-
-      this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default', dark: true };
-
-      await this.$store.dispatch('forgotPassword', { email })
-        .then(() => {
-          this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
-        })
-        .catch((error) => {
-          this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
-          this.error = error;
-        });
+  export default {
+    props: {
+      loginLink: { type: String, default: '/' },
     },
-  },
-};
+    data() {
+      return {
+        isValid: false,
+        email: '',
+        error: '',
+        status: { submitTitle: 'Send reset e-mail', color: 'secondary', dark: true },
+      };
+    },
+
+    methods: {
+      async submit() {
+        await this.$validator.validateAll();
+
+        const { email } = this;
+
+        if (!this.isValid) {
+          return;
+        }
+
+        this.status = { submitTitle: 'Sending the reset e-mail...', color: 'default', dark: true };
+
+        await this.$store.dispatch('forgotPassword', { email })
+          .then(() => {
+            this.status = { submitTitle: 'Finished! Please check your e-mail.', color: 'success', dark: true };
+          })
+          .catch((error) => {
+            this.status = { submitTitle: 'Oops! Something went wrong...', color: 'error', dark: true };
+            this.error = error;
+          });
+      },
+    },
+  };
 </script>

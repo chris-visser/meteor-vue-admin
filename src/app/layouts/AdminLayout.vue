@@ -3,7 +3,7 @@
     <TheNavigation :is-visible="drawerIsVisible" />
 
     <TheHeader @toggleDrawerVisibility="drawerIsVisible = !drawerIsVisible">
-      <UserLogoutButton slot="actions" />
+      <UserLogoutButton slot="the-header-actionbar" />
     </TheHeader>
 
     <v-content>

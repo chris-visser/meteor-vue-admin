@@ -1,12 +1,12 @@
 <template>
-  <VBtn
+  <v-btn
     icon
     title="Logout"
     :loading="isLoading"
     @click="logout"
   >
     <VIcon>logout</VIcon>
-  </VBtn>
+  </v-btn>
 </template>
 
 <script>
